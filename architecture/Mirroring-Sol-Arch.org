@@ -1,0 +1,533 @@
+* HEADER
+                      <VLEAD>
+                      <SubUnit>
+                      |----------------------------------|
+                      | Solution Architecture Definition |
+                      | Document No -<nnnnnn>            |
+                      |----------------------------------|
+
+                      |-----------------------------------|
+                      | Mirroring of Virtual-labs at IITD |
+                      | -Labs Source and VLEAD Services-  |
+                      |-----------------------------------|
+
+                      |------------------+------------|
+                      | Document Status: |      Draft |
+                      | Document Issue:  |       0.1  |
+                      | Issue date:      | 2013-08-21 |
+                      |------------------+------------|
+		      		      
+* DOCUMENT PURPOSE 
+- The Solution Architecture Definition defines the overall
+architectural solution for the "Mirroring of Virtual-labs at
+IITD". The solution addresses the problem as documented in the *VLEAD
+Mandate - Virtual Labs Integration: Deliverables, Resources and Budget
+2012-06-02" (Jun 2012)*.  The solution comprises a number of elements
+or components, which are partitioned into subsets for
+implementation. The primary audience of this document consists of IT
+and network architects.The primary purpose of this document is to
+communicate the essential elements of the overall solution so that
+operatational implications can be assessed and understood, and so that
+the design activities in Design & Build can proceed further.  As such
+it achieves the following:
+- It provides visibility and exposure to other architects for peer
+  review.
+- It unambiguously defines the overall solution to the proposed
+  requirements of the initiative.
+- It partitions the solution into parts that can be individually
+  specified and allocated to appropriate groups.
+- It assigns responsibility for meeting functional and non-functional
+  requirements to each part.
+- It provides a basis for assessment of the overall solution once
+  implemented.
+- It describes how the development and deployment of the solution can
+  be phased if this is required to meet needs and or to meet
+  technology constraints
+** Project Overview and Status 
+- VLEAD (Virtual Labs Engineering and Architecture Division) team was
+setup in June 2012 as a central engineering team for integrating all
+the virtual-labs (around 180 in number) across all disciplines and
+institutes onto a common data-center (currently located at IIIT
+Hyderabad). Currently(as of 2013-08-15) around 86 lab sources are
+version-controlled and around 40 hosted out of IIIT
+data-centre. Hence, it becomes absolutely necessary to have atleast
+the sources mirrored at an additional location (identified as IIT
+Delhi) so as to ensure availability, reliability and faster recovery
+of *Virtual Labs* in case of unforeseen disasters or catastropes.
+- In very long term, the plan is to achieve live mirroring of all the
+  lab content as well as to run *Virtual labs* out
+  of multiple sites to ensure better availability, reliability and
+  performance.
+
+** Project Scope and Objectives 
+* SCOPE
+ - The scope of this project is to have the sources of all
+the Virtual-labs mirrored at one of the servers at IIT
+Delhi. Additionally, other critical data on VLEAD VMs and Containers
+are also planned to be mirrored as part of this initiative.
+
+|-----------------------+--------------------------------------|
+| Inclusions            | Exclusions                           |
+|-----------------------+--------------------------------------|
+| Backup of Lab Sources | Live Mirroring of lab                |
+|                       | content and hosting                  |
+| Backup of VMs and     | Mirroring of complete VLEAD Services |
+| Containers            | Load-sharing between IIITH           |
+|                       | and IITD sites                       |
+|-----------------------+--------------------------------------|
+* PROJECT ROLES AND RESPONSIBILITIES 
+** Key Stakeholders and Escalation Levels
+|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
+| AREA / POSITION | NAME                | ROLE                   | Escalation Level | Email                          |  CONTACT NUMBER |
+|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
+| Prime           | Ranjan Bose         | Principal Investigator | LEVEL 4          | rbose.iitd@gmail.com           | +91-11-26591048 |
+| Stakeholders    |                     | (IIT Delhi)            |                  |                                |                 |
+|                 | Venkatesh Choppella | Principal Investigator | LEVEL 3          | venkatesh.choppella@iiit.ac.in | +91-965-2740281 |
+|                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
+|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
+| Technology      | Chandan Gupta       | IT Manager             | LEVEL 2          | chandan@virtual-labs.ac.in     | +91-970-3330781 |
+| Stakeholders    |                     | (IIIT Hyderabad)       |                  |                                |                 |
+| (IT, Vendors,   | Kuldeep Singh       | Engineer(??)           | LEVEL 2          | kuldeep.002@gmail.com          | +91-11-64674687 |
+| Networks etc)   |                     | (IIT Delhi)            |                  |                                |                 |
+|                 | Suraj Ketan Samal   | Engineer               | LEVEL 1          | suraj@virtual-labs.ac.in       | +91-868-6160862 |
+|                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
+|                 | Technical Support   | Technical Support      | LEVEL 0          | engg@virtual-labs.ac.in        | +91-40-66531592 |
+|                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
+|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
+| Other           | ??                  | ??                     | ??               | ??                             |              ?? |
+| Stakeholders    |                     |                        |                  |                                |                 |
+|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
+
+** Escalation Matrix
+
+ - Below is the proposed response-time for various types of requests:
+
+|-------------------------------+--------+---------|
+| Escalation Level/Request Type | Urgent | Normal  |
+|-------------------------------+--------+---------|
+| LEVEL 0                       | 2 hrs  | 2 days  |
+| LEVEL 1                       | 4 hrs  | 5 days  |
+| LEVEL 2                       | 6 hrs  | 10 days |
+| LEVEL 3                       | 1 day  | 15 days |
+| LEVEL 4                       | 3 days | 25 days |
+|-------------------------------+--------+---------|
+
+*Note:* 
+  - 'hrs' mean working hours and 'day' or 'days' mean working days
+  - 'response-time' means acknowledgement of the issue and work in progress on the same
+ 
+ - Below is the description of various Request Types:
+
+|--------------+----------------------------------------------------------------------|
+| Request Type | Description                                                          |
+|--------------+----------------------------------------------------------------------|
+| Urgent       | The complete solution or majority of the solution is affected.       |
+|              | (Ex: Backups not happening any more due to some bug in the solution, |
+|              | Network Issues due to ISP down, power outage etc)                    |
+|              |                                                                      |
+| Normal       | Minor bugs with little impact on the solution, change requests       |
+|              | to the existing solution, maintainance activities                    |
+|--------------+----------------------------------------------------------------------|
+
+* SOLUTION ARCHITECTURE ASSUMPTIONS 
+
+|----------+-------------------+----------------------------------------------------------------------------------|
+| Table 1. | Assumptions       |                                                                                  |
+|----------+-------------------+----------------------------------------------------------------------------------|
+| Number   | Assumption        | Description                                                                      |
+|----------+-------------------+----------------------------------------------------------------------------------|
+| ASS-01   | Resources         | Resources should be available at (IIITH and IITD) for setup and                  |
+|          |                   | continuous support (trouble-shooting, fixing issues) throughout the              |
+|          |                   | duration of Virtual-Labs project                                                 |
+|          |                   |                                                                                  |
+| ASS-02   | Infrastructure    | Infrastructure at IIT Delhi will need to be setup within appropiate time-frames. |
+|          |                   | It should be accessible from Virtual-labs datacenter,IIIT Hyderabad.             |
+|          |                   | It should be linux based machine and accessible with diskspace (~1TB)            |
+|          |                   |                                                                                  |
+| ASS-03   | Data requirements | Data content and format for the mirroring-setup  will not vary without           |
+|          |                   | agreement between VLEAD,IIIT Hyderabad and Virtual-labs,IIT Delhi teams          |
+|          |                   |                                                                                  |
+| ASS-04   | Estimated Data    | Labs Assumed =180, VMs Assumed = 55, Also, it doesnot                            |
+|          |                   | include the One-lab-per-VM Model concept                                         |
+|          |                   |                                                                                  |
+| ASS-05   | Change management | All subsequent changes to this interface will need to be signed off by           |
+|          |                   | all the prime Stakeholders and updated accordingly in this document.             |
+|----------+-------------------+----------------------------------------------------------------------------------|
+
+* SOLUTION OVERVIEW
+   [ Insert image of current system] 
+  - Sources of all Virtual-labs are stored in the version-control
+VM(svn.virtual-labs.ac.in/bzr.virtual-labs.ac.in/git.virtual-labs.ac.in)
+at Virtual Labs DataCenter, IIIT Hyderabad. These sources are uploaded
+(checked-in) and downloaded (checked-out) over HTTP and SSH publicly
+by different lab developers across all the institutes. This critical
+data is already backed-up on a storage server(SAN) located in the same
+data-center.
+  - Additionally, there is also critical data belonging to services
+provided by VLEAD (eg. ldap, developer-portal, ns, mail) which is used
+by Virtual-labs community and VLEAD internally. This data is across
+different Virtual machines setup at Virtual Labs DataCenter, IIIT
+Hyderabad. Selected file-systems from all these VMs is already
+backed-up on the same storage server(SAN) in the data-center.
+** Architecture Overview 
+ - All the critical data(as described above) at IIIT DataCenter
+   will be mirrored at an offsite location(IIT, Delhi) using a
+   mechanism that syncs data overnight at a specified time everyday.
+ - A cronjob running at the IIIT data-center would daily push all the
+   incremental data from the storage server(SAN) to the mirrored location.
+** Architectural Decisions 
+     - Here are a summary of significant decisions and the rationale behind
+the decisions used to derive the solution. This table represents a
+single decision and each decision in a table format.
+
+|------------------------+----------------------------------------------------------------------------------------------------------------------------|
+| Subject Area           | Area of Concern                                                                                                            |
+|------------------------+----------------------------------------------------------------------------------------------------------------------------|
+| Architectural Desicion | AD-001 Backup principle                                                                                                    |
+|                        |                                                                                                                            |
+| Issue or Problem       | Which backup/restore tool should be used ?                                                                                 |
+| Assumptions            |                                                                                                                            |
+| Motivation             | - Data sizes are huge, hence need to have a mechanism to send incremental data rather than sending all the data everytime. |
+|                        | - Backup/Restore process should be recoverable, so that in case of failure, it can start from the place it failed.         |
+|                        | - Backup/Restore process should work seamlessly with a subset of data without any additional efforts.                      |
+|                        | - Transfer of data over public network should be secure and encrypted.                                                     |
+|                        | - Should be scalable (atleast up to the estimated specifications).                                                         |
+|                        | - Should complete within stipulated time-frames and not interfere with system's normal operations.                         |
+|                        | - Should be automated requiring as less manual intervention as possible.                                                   |
+|                        | - Backup tool should preserve the user/group/timestamp attributes.                                                         |
+|                        | - Data needs to be pushed rather than pulled to enable VLEAD team to monitor the backup/restore process.                   |
+|                        | - Should send data with parallel/simultaneous connections and in compressed format.                                        |
+|                        |                                                                                                                            |
+| Options                | Rsync, SCP (Secure Copy), Rsnapshot(uses rsync), Clonezilla (works at image level)                                         |
+|                        |                                                                                                                            |
+| Decision               | 'rsync' tool to be used and scheduled on crontab. Data will be pushed from the source to the destination.                  |
+|                        |                                                                                                                            |
+| Justification          | Rsync seems to closely satisfy all the requirements as mentioned in the motivation:                                        |
+|                        | - SCP cant be used in an incremental fashion and doesnot preserve filesystem attributes.                                   |
+|                        | - Rsnapshot is a good tool but applicable when it runs on destination and pulls data from source.                          |
+|                        | - Clonezilla or other Imaging tools work at disk/filesystem level and not applicable in complete or partial                |
+|                        | backup/restore of directories.                                                                                             |
+|                        |                                                                                                                            |
+| Implications           | 'rsync' tool should be available on both the systems and an SSH account on the mirror-system is required                   |
+|                        |                                                                                                                            |
+|                        |                                                                                                                            |
+| Derived requirements   | Rsync should be installed on both source and destination systems.                                                          |
+| Related Decisions      |                                                                                                                            |
+|------------------------+----------------------------------------------------------------------------------------------------------------------------|
+
+|------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+| Subject Area           | Area of Concern                                                                                                          | Topic | Topic of Interest (Eg. Security). |
+|------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+| Architectural Decision | AD-002 Mirrored Platform Specifications                                                                                  | AD ID | A unique identifier               |
+|                        |                                                                                                                          |       |                                   |
+| Issue or Problem       | Which hardware/OS/softwares should be used for the target mirror destination and what should be its specifications ?     |       |                                   |
+| Assumptions            |                                                                                                                          |       |                                   |
+| Motivation             | - Existing lab sources are versioned on linux platforms(open source). Hence mirrored location should also be Linux based |       |                                   |
+|                        | so as to make the backup/restore process simpler.                                                                        |       |                                   |
+|                        | - Destination platform should be reliable, available and provide optimum performance.                                    |       |                                   |
+|                        | - Mirrored location should be operational remotely (aleast from IIIT Hyderabad).                                         |       |                                   |
+|                        | - Server should be accessible from Virtual-labs network, IIIT Hyderabad.                                                 |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Options                |                                                                                                                          |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Decision               | - Standard Platform (Multi-core Intel Xeon Series Processor)                                                             |       |                                   |
+|                        | - Atleast 16GB of RAM                                                                                                    |       |                                   |
+|                        | - Atleast 1TB of available space after (RAID)                                                                            |       |                                   |
+|                        | - Redundant power backup                                                                                                 |       |                                   |
+|                        | - RAID Configured for reliability and optimum performance.                                                               |       |                                   |
+|                        | - Multiple network interfaces (if possible).                                                                             |       |                                   |
+|                        | - An SSH account is required for maintainance purposes.                                                                  |       |                                   |
+|                        | - Rsync tool is required and should run on a port accessible form Virtual-labs network.                                  |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Justification          | Decisions made according to items required in the Motivation section                                                     |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Implications           |                                                                                                                          |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Derived requirements   |                                                                                                                          |       |                                   |
+|                        |                                                                                                                          |       |                                   |
+| Related Decisions      |                                                                                                                          |       |                                   |
+|------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+** Outstanding Issues 
+Key Architectural Issues
+|------------------+-------------------+-----------------------------------------------------+-------|
+| Issue Identifier | Area(s) Impacted  | Description                                         | Owner |
+|------------------+-------------------+-----------------------------------------------------+-------|
+| ISS – 01         | Backup Data       | Version control is currently in a different network |       |
+|                  |                   | (10.4.7.x) and needs to be migrated to (10.4.12.x)  |       |
+|                  |                   | network before the solution is implemented.         |       |
+|                  |                   |                                                     |       |
+| ISS - 02         | Security          | Data on mirrored-location can be accessible to      |       |
+|                  |                   | anyone having physical access to the system as it   |       |
+|                  |                   | is a file-system backup.                            |       |
+|                  |                   |                                                     |       |
+| ISS - 03         | Backup Tool       | Rsync has problem with bigger file-sizes            |       |
+|                  |                   |                                                     |       |
+| ISS - 04         | Network Bandwidth | Overall link bandwidth with current setup is        |       |
+|                  |                   | is not reliable and too slow. We should probably    |       |
+|                  |                   | investigate use of a dedicated service line from    |       |
+|                  |                   | IIIT Hyderabad to IITD based on the cost and        |       |
+|                  |                   | future scope/plan                                   |       |
+|------------------+-------------------+-----------------------------------------------------+-------|
+                                                                                                                                                                                                                                                                                               
+** Architectural Risks 
+    Key architectural risks are as follows:
+|-----------------+-------------------------------------------------|
+| Risk [AR]       | Description                                     |                  |                                                 |
+|-----------------+-------------------------------------------------|
+| AR - 01         | Mirroring speed has an upper-limit equal to the |
+|                 | network latencies of ISPs and                   |
+|                 | hence the solution cannot be scaled infinitely. |
+| AR - 02         | Security is compromised as data travels using   |
+|                 | different ISPs over public network              |
+|-----------------+-------------------------------------------------|
+                        
+* SOLUTION DESCRIPTION 
+Provide details of the actual solution. In cases where more than one
+solution is explored only the selected one is documented here.  The
+presentation of the solution description should follow from the design
+methodology used to create the solution. IE, an end to end functional
+model may be the key view for a telephony product, e.g., the numbering
+scheme. A component model will then follow from the end to end
+functional view. The template structure described below should be used
+as required (marked NA if not applicable or augmented if necessary)
+NB, the Requirements Traceability Matrix will cross reference to the
+solutions described in this section.  Note that for UI (typically Web
+and WAP) applications a User Interface Design Document (UIDD) template
+is available to assist with the description of the Design.  The UIDD
+describes front-end interface design, functionality and user
+experience for a screen development (typically a Web or WAP) project,
+and is prepared in conjunction with the SAD or Detailed Design
+Document.
+** Functional Model 
+Typically this section will describe end to end functionality such as
+setting up a call, such as billing, such as establishing a VLAN. The
+functional model will describe and or specify protocols, signalling
+details, etc.  EG, Routing protocols, etc
+   - Backup Schedule
+   - Recovery or Retries
+** Re-use of Components 
+ - Already existing rsnapshot backup/restore scripts and
+   configurations developed for backups to the local storage(SAN) server
+   will be used as a baseline and will be re-used to implement the
+   solution. 
+** Information and Data Characterstics 
+*** Data Types
+    - All lab sources data to be mirrored are in repostitories in the form of unix directories and flat-files.
+    - Databases would be dumped into flat(.sql) files and then backed-up as flat-files.
+*** Current and Estimated Data Size
+ |------+----------------+--------------+---------+-----------+---------------------------------|
+ | Slno |                | Criteria     | Current | Estimated | Comment                         |
+ |------+----------------+--------------+---------+-----------+---------------------------------|
+ |    1 | Labs           | Total number | 86      | 180       |                                 |
+ |      |                | Total Size   | 88GB    | 185GB     | Estimated based on average size |
+ |      |                | Max Size     | 25G     | 25G       |                                 |
+ |      |                | Min Size     | 1.2MB   | 1.2MB     |                                 |
+ |      |                |              |         |           |                                 |
+ |    2 | VMs/Containers | Total number | 29      | 53        |                                 |
+ |      |                | Total Size   | 153GB   | 280GB     | Estimated based on average size |
+ |------+----------------+--------------+---------+-----------+---------------------------------|
+*** Data Security
+    - The mirrored data is not compressed or encrypted and will have
+      the same file-system structure as on the source
+      file-system. This is required as in our use-case, partial
+      restore of the data will be required mostly where a specific
+      lab or VM data is required to be restored. Hence, it is
+      *required* that the mirrored system be kept in a secured area
+      where data cannot be compromised.
+** Infrastructure Model
+*** Source(IIIT Hyderabad Datacenter)
+     - No additional infrastructure is required at IIITH Datacenter for this solution
+*** Target(IIT Delhi DataCenter)   
+     - Following is the proposed specifications of the target system
+       where the mirrored data is required to be kept:
+	+ Any Standard Server(Multi-core Intel Xeon Series Processor)                                           
+	+ Linux based OS (CentOS preferred)
+	+ Minimum 16GB of RAM                                      
+	+ Atleast 1TB of available space after (RAID)  
+	+ Redundant power backup                                  
+	+ RAID Configured for reliability and optimum performance.
+	+ Multiple network interfaces (if possible).      
+** Integration and Network Design 
+   - This needs to be *planned* and updated
+** Security Architecture 
+  - This section describes the security controls that will be
+    incorporated into the solution.
+*** Network Security 
+ - No special security features will be implemented as part of this
+   solution apart from any features that already exist or are provided
+   by the tools used as part of the solution.
+     + E.g Using rsync server, the target mirror will be configured to
+       accept connections only form source and will reject connections
+       from any other hosts.
+     + Only required ports will be made open on the source and target
+       systems.
+*** System Security 
+ - No additional system security solutions would be implemented. The
+   source and target systems will be secured by default options
+   provided by Linux Operating system (PAM, SSH Key-based/password
+   authentication, IPtable Firewalls)
+*** Application Security 
+ - This will not be applicable as the mirrored-location will be
+dedicated for this solution and no additional applications will be
+allowed to be running out of the system.
+ - No special application level authentication/authorization will be
+   implemented. Authentication and authorization will work at system
+   level and covered by system security.
+*** Operational Security 
+ - For operational purposes, the mirrored-system super-user
+   credentials will be only shared amoung ??
+** Privacy   
+ - No specific measures are proposed to be implemented as part of the
+   solution to cater to safeguard private data. This is a risk which
+   is mitigated by having security at system level and physical level.
+** Performance 
+Provide an overview of the architectural features impacting
+performance (e.g, throughput and response times, transit times,
+jitter, etc)
+
+*** Performance Modelling 
+Provide data or reference to a model used to estimate system
+performance. Compare to performance requirements from the RDD. The
+analysis should include typical performance and worst-case scenarios.
+
+** Reliability and Availability 
+ - The solution is required to be available all the time (24*7*365).
+ - Any outages at source or target mirror locations should be planned
+   and notified apriori to that appropriate measures can be taken.
+ - Following would be implemented at platform and network level:
+    + Hardware Level RAID Configuration would be used to ensure redundancy.
+    + Multiple network ports on source and mirrored-system can be implemented.
+    + Redundant power supply can ensure more availability.
+ - No measures at the application level will be implemented to
+   ensure further reliability and availability.
+*** Availability Modelling 
+** Scalability 
+   - The proposed solution is already planned to be scalable to the
+     upper limits mentioned in the data characterstic specifications
+     right from its inception and hence no specific
+     scalability features would be implemented.
+* OPERATIONS 
+** Monitoring
+ - The backup solution will be monitored manually once
+   daily by the VLEAD Engineering team.
+** Alarms and Notifications 
+ - No automated alarms will configured. Will be tackled on a reactive
+   basis as per the escalation matrix.
+** Reporting 
+ - No Reporting mechanisms are implemented as part of this solution.
+** Capacity Planning 
+ - Capacity planning for the entire solution is done in first stage
+   itself and hence not required during operational phase of this
+   project.
+
+* SOLUTION ACCEPTANCE CRITERIA  
+ - The solution should be fast enough to run over-night and not affect
+   normal operations of the systems and network.
+* IMPLEMENTATION AND MIGRATION
+ - The solution is proposed to be implemented in two phases:
+  | Phase    | Description       | Dependencies |
+  |----------+-------------------+--------------|
+  | Phase-I  | Mirroring of Labs | None         |
+  | Phase-II | Mirroring of VMs  | Phase-I      |
+  |----------+-------------------+--------------|
+ - Since, the solution is built from scratch, no migration requirements
+   are to be addressed/
+* REFERENCES 
+| Document Number | Title                                                     | Location                                                                 |
+| ???             | VLEAD Expert Committee Review - 25 July 2013 Presentation | <Vlead-Repo>/meetings-and-reviews/2013-07-25-expert-review/src/index.org |
+| ???             | VLEAD Engg Contract                                       | <Vlead-Repo>/official-docs/2012-06-02-vlead-engg-contract.pdf            |
+* DEFINITIONS 
+The following words, acronyms and abbreviations are referred to in
+this document.
+|-------+--------------------------------------------------------|
+| Term  | Definition                                             |
+|-------+--------------------------------------------------------|
+| VLEAD | Virtual Labs Engineering and Architecture Divison      |
+| RAID  | Redundant Array of Independent Disks                   |
+| Engg  | Engineering                                            |
+| IIIT  | International Institute of Information Technology      |
+| VM    | Virtual Machines                                       |
+| SAN   | Storage Area Network                                   |
+| SSH   | Secure Shell                                           |
+| HTTP  | HyperText Transfer (or Transport) Protocol,            |
+|       | the data transfer protocol used on the World Wide Web. |
+|-------+--------------------------------------------------------|
+* ATTACHMENTS 
+| Document Number | Title |
+|                 |       |
+
+* SIGN-OFF 
+The completion of the sign-off page is a testament by the signatories
+below that the following has been achieved or agreed:
+- The document has been peer reviewed and all review-defects have been fixed
+- The document is complete and accurate
+- This document will be placed under configuration control
+|--------------------------+-------------------|
+| Reviewed Revision Number | 0.1               |
+| Baseline Revision Number |                   |
+| Baseline Date            |                   |
+| Author                   | Suraj Ketan Samal | 
+|--------------------------+-------------------|
+                        
+
+|-------------------------+-------------------------------------------------------+----------------+------------------------|
+| Organisational Position | Professor, Dept. of Electrical Engineering, IIT Delhi |                |                        |
+| Signature               | <Attach e-mail approval or link to approval>          | Date           | <Insert date approved> |
+| Name                    | Ranjan Bose                                           | Contact Number |         +91-11-2659104 |
+| Role                    | Principal Investigator, Virtual Labs Project          |                |                        |
+|-------------------------+-------------------------------------------------------+----------------+------------------------|
+
+|-------------------------+-------------------------------------------------------+----------------+------------------------|
+| Organisational Position | Associate Professor, IIIT Hyderabad                   |                |                        |
+| Signature               | <Attach e-mail approval of link to approval>          | Date           | <Insert date approved> |
+| Name                    | Venkatesh Choppella                                   | Contact Number |       +91-965-274-0281 |
+| Role                    | Principal Investigator, VLEAD                         |                |                        |
+|-------------------------+-------------------------------------------------------+----------------+------------------------|
+
+** Comments 
+   
+** Documentation Location 
+|-------------------------------------------------------------------+-------------------------------------------------------|
+| Master Hard copy                                                  | Master Electronic                                     |
+|-------------------------------------------------------------------+-------------------------------------------------------|
+| *State where stored, or write ‘NA’ if there are no paper copies.* | *State where stored e.g. Stored in DM TAF repository* |
+|-------------------------------------------------------------------+-------------------------------------------------------|                                                                    |                                                       |
+  
+* DOCUMENT CONTROL SHEET  
+This section captures all changes made to the content of document. If
+you have any questions regarding this document or would like to
+suggest an improvement, contact:
+|-------------+-------------------------|
+| Name        | Suraj Ketan Samal       |
+| Designation | Project Engineer        |
+| Phone       | +91 40 6653 1592        |
+| Email       | engg@virtual-labs.ac.in |
+| Fax         | <Contact Fax>           |
+|-------------+-------------------------|
+Record of Issues
+|----------+------------+---------------------+--------|
+| Issue No | Issue Date | Nature of Amendment | Author |
+|----------+------------+---------------------+--------|
+|      0.1 | 2013-08-21 | Initial Draft       | Suraj  |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|----------+------------+---------------------+--------| 
+
+This publication has been prepared and written by *VLEAD,IIIT
+Hyderabad*, and is copyright. Other than for the purposes of and
+subject to the conditions prescribed under the Copyright Act, no part
+of it may in any form or by any means (electronic, mechanical,
+microcopying, photocopying, recording or otherwise) be reproduced,
+stored in a retrieval system or transmitted without prior written
+permission from the document controller.
+
+Note for other readers: The contents of this publication are subject
+to change without notice. All efforts have been made to ensure the
+accuracy of this publication. Notwithstanding, *VLEAD, IIIT Hyderabad*
+does not assume responsibility for any errors nor for any consequences
+arising from any errors in this publication.

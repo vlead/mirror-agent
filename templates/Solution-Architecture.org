@@ -1,0 +1,724 @@
+* HEADER
+                      <Unit>
+                      <SubUnit>
+                      |----------------------------------|
+                      | Solution Architecture Definition |
+                      | Document No -<nnnnnn>            |
+                      |----------------------------------|
+
+                      |------------|
+                      | <Title>    |
+                      | <Subtitle> |
+                      |------------|
+
+                      |------------------+------------|
+                      | Document Status: |      Draft |
+                      | Document Issue:  |       0.1  |
+                      | Issue date:      | 2013-08-10 |
+                      |------------------+------------|
+		      
+		      
+* TABLE OF CONTENTS
+* Guidelines for Usage of this template
+- Remember to run a spell check.
+- Items in angled brackets are to be replaced with appropriate
+  contents.  For example, <Project Manager name> should be replaced by
+  the name of the Project Manager.
+- This document contains pre-formatted styles for headings. To convert
+  a line into heading, select the line and choose Heading-1,
+  Heading-2, etc., as appropriate from the style drop down adjacent to
+  the font drop down box.
+- Once the document bookmarks are updated, change blue italicised text
+  by selecting it and pressing Ctrl and Space keys to refer the text
+  to its default style.
+- Ensure all headers and footers are updated accordingly.
+- Remove these notes and other guidelines from the actual document.
+  They are meant for your information only.  These are given in this
+  colour and font.
+** MACRO HELP
+** Inserting Images
+- To insert an image, follow these steps:
+- Place the cursor where you want the image
+- Change the text format to ‘normal’
+- Paste your image in the selected area
+** Template Control Sheet
+- This is used by the Process Manager and Document Controller to
+  record changes to templates.
+- This page can be deleted if not required by a project.
+** Tailoring Process Templates
+  All templte tailoring must be approved as per the tailoring
+  process. If a section of a template is not required, ‘Not required’
+  must be inserted in the section rather than deleting it. This will
+  demonstrate that the project team considered this section and found
+  it to be irrelevant to the project.
+** Solution Definition Tailoring
+- Generally the Solution Definition phase will be subject to the
+  ‘Tailoring In’ of additional processes and/or artefacts. The
+  Tailoring Matrix has some criteria which if present in / triggered
+  by a project, may require SD to be tailored. If this occurs it is
+  possible that a Requirements Definition Document (RDD) and/or a
+  Solution Architecture Document (SAD) may be produced as well as the
+  standard SD deliverables (BRD & SID). If these deliverables are
+  'Tailored In' to the SD phase of a project the following may also
+  need to occur:
+- Obtain CAPEX funding for these items
+- Tailor In the commensurate PRAG Review (e.g. SAR with SAD)
+- Modify the Project Schedule and Process milestones in EPM (Clarity) to
+  reflect the tailoring.
+- If the above tailoring does occur there is no need to repeat the
+  tailored activities when a project moves to the Design & Build
+  phase.
+** User Interface (UI) Applications
+Note that for UI (typically Web and WAP) applications a User Interface
+Design Document (UIDD) template is available to assist with the
+description of the Design.  The UIDD describes front-end interface
+design, functionality and user experience for a screen development
+(typically a Web or WAP) project.
+* DOCUMENT CONTENT
+** DOCUMENT PURPOSE 
+The Solution Architecture Definition defines the overall architectural
+solution for the <initiative-name>. The solution addresses the problem
+as documented in the Business Requirements and the Requirements
+Definition Documents and the Solution Impact Description <DME
+references>.  The solution comprises a number of elements or
+components, which are partitioned into subsets for
+implementation. Where required, a Component Specification will be
+subsequently prepared.  The primary audience of this document consists
+of IT and network architects.  The document would typically be too
+detailed for business clients.  The primary purpose of this document
+is to communicate the essential elements of the overall solution so
+that business implications can be assessed and understood, and so that
+the design activities in Design & Build can proceed if the initiative
+is approved.  As such it achieves the following:
+- It provides visibility and exposure to other architects for peer
+  review.
+- It unambiguously defines the overall solution to the business
+  requirements.
+- It partitions the solution into parts that can be individually
+  specified and allocated to appropriate providers.
+- It assigns responsibility for meeting functional and non-functional
+  requirements to each part.
+- It provides a basis for assessment of the overall solution once
+  implemented.
+- It describes how the development and deployment of the solution can
+  be phased if this is required to meet business needs and or to meet
+  technology constraints
+*** Project Overview and Status 
+*Provide the background and context of the initiative, and its current
+status from a project perspective.  The current status should also
+include any significant risks or issues that may be relevant to the
+solution.*
+
+*** Project Objectives/ Problem Statement 
+Provide a brief overview of the objectives of the project, e.g. an
+overview of a new product or a new feature, or a new support system,
+etc. Include a brief summary of the business need and drivers behind
+the as, initiative well as enterprise, design and standards
+constraints. EG, include forecast growth, peak traffic/transaction
+volumes, and reference market projections, etc. Refer to the RDD for
+detail. Ensure that design objectives have taken into consideration
+security architecture principles Alternatively the objective may be
+best described as an initiative to solve a problem. The table below
+provides a suggested format for the problem statement.
+|--------------------------------+---|
+| The problem of                 |   |
+|--------------------------------+---|
+| affects The impact of which is |   |
+|--------------------------------+---|
+| A successful solution would    |   |
+|--------------------------------+---|                                 
+** SCOPE
+*Insert a statement that describes the project scope.List all the
+inclusions and exclusions (what is in and out of scope) for this
+initiative.*
+|------------+------------|
+| Inclusions | Exclusions |
+|------------+------------|
+|            |            |
+|------------+------------|  
+** PROJECT ROLES AND RESPONSIBILITIES 
+*** Key Stakeholders 
+|-------------------------------------------------------------+-------------+----------------|
+| AREA / POSITION                                             | NAME / ROLE | CONTACT NUMBER |
+| Business Stakeholders                                       |             |                |
+|                                                             |             |                |
+|                                                             |             |                |
+|                                                             |             |                |
+| Technology Stakeholders (IT, Vendors, Networks etc)         |             |                |
+|                                                             |             |                |
+|                                                             |             |                |
+|                                                             |             |                |
+| Operations Stakeholders                                     |             |                |
+|                                                             |             |                |
+
+** SOLUTION ARCHITECTURE ASSUMPTIONS 
+|----------------------+-------------------+------------------------------------------------------------------------------------------------------------------------------|
+| Table 1. Assumptions |                   |                                                                                                                              |
+|----------------------+-------------------+------------------------------------------------------------------------------------------------------------------------------|
+| Number               | Assumption        | Description                                                                                                                  |
+|----------------------+-------------------+------------------------------------------------------------------------------------------------------------------------------|
+| Assumption           | Resources         | Resources from  will be available for testing in the timeframes specified in the project plans.                              |
+| Assumption           | Data requirements | Data content and format for this interface will not vary without agreement between the provider system and consumer systems. |
+| Assumption           | Change management | After signoff of this document, all changes to the interface will be managed via the recognised Change Request process.      |
+|----------------------+-------------------+------------------------------------------------------------------------------------------------------------------------------|                                                                                                                                                                          |
+
+** SOLUTION OVERVIEW 
+*** Architecture Overview 
+*Provide an overall view of the solution, typically a diagram,*
+*including its context within the current IT and network*
+*environment. Where the solution has been partitioned, the individual*
+*subsets must be clearly defined, and the assignment to the respective*
+*providers identified. Each subset will be the subject of a more*
+*detailed specification in section 3.*
+*** Target Audiences 
+*Provide an overall view of the solution’s internal and external*
+*interfaces (eg, a diagram or table).*
+
+*** Architectural Decisions 
+*Include a summary of significant decisions and the rationale behind*
+*the decisions used to derive the solution. This table represents a*
+*single decision and each decision should be documented in a table*
+*using this format. Sections can be left blank, as appropriate.*
+|------------------------+--------------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+| Subject Area           | Area of Concern                                                                                                                | Topic | Topic of Interest (Eg. Security). |
+|------------------------+--------------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+| Architectural Decision | *Statement Describing what Architectural decision is being made  (Eg. Representation of actual and planned configurations).*   | AD ID | A unique identifier               |
+| Issue or Problem       | *A short description of the problem—what is being decided*                                                                     |       |                                   |
+| Assumptions            | *What is believed to be true about the context of the problem, constraints on the solution*                                    |       |                                   |
+| Motivation             | *Why this decision is important*                                                                                               |       |                                   |
+| Alternatives           | *A list of alternatives and explanations*                                                                                      |       |                                   |
+| Decision               | *The decision taken, possibly with references to related work products*                                                        |       |                                   |
+| Justification          | *Why the decision was made and a list of compliance to Architecture Principles and explanations of deviations from compliance* |       |                                   |
+| Implications           | *What impact the decision will have*                                                                                           |       |                                   |
+| Derived requirements   | *A list of requirements that are generated by this decision*                                                                   |       |                                   |
+| Related Decisions      | *A list of related decisions*                                                                                                  |       |                                   |
+|------------------------+--------------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+                                                                                                                                                                                                    
+*** Outstanding Issues 
+ *Include any outstanding issues from a Solution Architecture*
+*Definition, which need to be resolved in the Design & Build or any*
+*later stage of the Process. NB the issues will be managed via project issues*
+*management.*  
+Key Architectural issues
+|------------------+----------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------|
+| Issue Identifier | System(s) Impacted                                                                     | Description                                                                                                               | Owner                                                    |
+|------------------+----------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------|
+| ISS – 01         | Identify system(s) impacted by system name as described in this document  e.g. Flexcab | Issue to be documented in this section e.g. 01/01/2003: It is not clear whether Flexcab will generate error message xxxx. | Owner of the issue who will be managing it to resolution |
+| ISS – 02         |                                                                                        |                                                                                                                           |                                                          |
+|------------------+----------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------|
+                                                                                                                                                                                                                                                                                               
+*** Architectural Risks 
+Key architectural risks are as follows:
+|----------------------------+----------------------------------------------------------------------------------------+---------------------------------------|
+| Risk [AR], Assumption [AS] | System(s) Impacted                                                                     | Description                           |
+|----------------------------+----------------------------------------------------------------------------------------+---------------------------------------|
+| AR – 01                    | Identify system(s) impacted by system name as described in this document  e.g. Flexcab | Risk to be documented in this section |
+|----------------------------+----------------------------------------------------------------------------------------+---------------------------------------|
+                        
+** SOLUTION DESCRIPTION 
+*Provide details of the actual solution. In cases where more than one*
+*solution is explored only the selected one is documented here.  The*
+*presentation of the solution description should follow from the design*
+*methodology used to create the solution. IE, an end to end functional*
+*model may be the key view for a telephony product, e.g., the numbering*
+*scheme. A component model will then follow from the end to end*
+*functional view. The template structure described below should be used*
+*as required (marked NA if not applicable or augmented if necessary)*
+*NB, the Requirements Traceability Matrix will cross reference to the*
+*solutions described in this section.  Note that for UI (typically Web*
+*and WAP) applications a User Interface Design Document (UIDD) template*
+*is available to assist with the description of the Design.  The UIDD*
+*describes front-end interface design, functionality and user*
+*experience for a screen development (typically a Web or WAP) project,*
+*and is prepared in conjunction with the SAD or Detailed Design*
+*Document.
+*** Functional Model 
+Typically this section will describe end to end functionality such as
+setting up a call, such as billing, such as establishing a VLAN. The
+functional model will describe and or specify protocols, signalling
+details, etc.  EG, Routing protocols, etc
+*** Business Process Model 
+It is recommended that the Business Process Solution (BPS) template
+should be used for managing and defining the solution to meet the
+business process requirements captured in the RDD. This section of the
+SAD should contain a summary of the Business Process Solution.  If the
+BPS has been tailored out of your project and there are business
+process impacts, then the Business Process Solution should be fully
+detailed in this section of the SAD.  Put the solution in the context
+of the overall end to end flow of the business processes — and thus
+link the solution to requirements. The significant manual processes
+are identified, together with the interaction with the automated
+processes. Where the solution has been partitioned, the individual
+subsets must be clearly defined, and the assignment to the respective
+providers identified If Use Cases are defined show how the solution
+will deliver the required function Ensure that pathway/walk-through as
+well as design consistency assurance can be validated.
+
+*** Compoment Model 
+Include and describe the (technological) component model of the
+solution.  A component is any deployable element of architecture. It
+is characterised by its behaviour or function as exposed or expressed
+via an external interface. Components can be decomposed or aggregated
+into other components. Examples include a program, a software module,
+a system, a data repository, a network element, etc. Each component
+can utilise the services provided by other components, as well as
+provide services of its own.  The component model describes how sets
+of components participate in defining the solution. It includes static
+and dynamic relationships and interactions between components. The
+model documentation typically includes a number of diagrams expressing
+the different kinds of relationships — for example, dependency
+relationships, usage relationships, interaction and timing
+relationships, etc. Where the solution has been partitioned, the
+individual subsets of the component model must be clearly defined, and
+the assignment to the respective providers identified. Each subset
+will subsequently be the subject of a Solution Component Specification
+and is usually defined by the Provider(s) based on which he provides a
+cost and time estimate to a confidence level specified by the Project
+Manager.  An individual component can be defined in terms of how it
+interacts with other components, and the services it provides. The
+component specifications contain any Interface Asset Service
+Specifications (IASS) that describe the means whereby a particular
+service (function or process) is invoked, together with any associated
+conversation and messaging. The Interface Asset Consumer
+Specifications (IACS) describes how the consumer system uses those
+services. Finally, it is important that allocation of performance and
+reliability budgets, security roles, and other non-functional
+requirements is clear and explicit, so that implications to individual
+Solution Component Specifications are clear.  It is useful to
+recognise the following interface categories: User Interfaces — those
+interactions which exist to enable human interaction with the system;
+Application Services Interfaces — those interactions which enable the
+application services provided by one system to be utilised by another
+in an automated manner; Operational Interfaces — those interactions
+which are used to manage and operate the systems environment,
+including monitoring, recovery and exception management; Security
+Interfaces – those interactions with security components System
+Synchronisation Services Interfaces — those interactions that are used
+to maintain persistent reference and state information integrity
+across multiple systems in a synchronised manner.  In specifying
+interfaces and services, it is important to understand that there are
+two important cases: Functional Services — this case involves services
+that are primarily stateless, and there is a one-to-one correspondence
+between interface and service. Each such service can be described
+independently.  Process Services — this involves services that
+implement a process, and behaviour is dependent upon previous
+activity. Typically, a single process may involve many interface calls
+— calls are sometimes referred to as “triggers” and in this case it is
+necessary, not only to describe each of the interfaces but also the
+state behaviour of the process itself.  The Interface Asset
+Specification process enables individual services to be specified in a
+way to enable re-use of the physical interface and specification
+documentation by multiple consumer systems. For simple functional
+systems where there is no intent of providing re-use by other systems
+in the future, interfaces and corresponding services can be described
+as a single group given the appropriate architectural authority.
+Analysis related to performance, reliability, and other non-functional
+characteristics is captured in the Requirements Definition Document
+and later translated as appropriate into IAS documentation to ensure
+each solution component’s service(s) design enables the overall
+solution to meet requirements.
+
+*** Re-use of Components 
+It is important to identify services, components, code, documentation,
+etc that are candidates for corporate reuse and to design and maintain
+baseline documentation in a way that enables that re-use at minimised
+cost. In this section describe what has been achieved in reuse, and
+any issues arising.
+
+*** Information Model 
+Include (or reference) and describe the information model pertinent to
+the solution.  The Information Model covers a structured view of the
+business, system and state information that is the subject of the
+solution. The information model does not need to address objects or
+data which are not exposed (or likely to be exposed) externally.  For
+data management intensive solutions such as those Databases of Record,
+this part of the solution will form a significant proportion of the
+total, and may actually be contained in separate documentation that is
+explicitly referenced by title, date and version.  Whilst the
+information passed and returned by each interface is described in the
+Component Model, in most cases it is also appropriate to describe the
+consolidated information model.  Where the solution has been
+partitioned, the individual subsets of the information model must be
+clearly defined, and the assignment to the respective providers
+identified.
+
+**** Information and Data Characterstics 
+Regardless of the complexity or size of the information model, define
+the required non-functional characteristics of the model elements (or
+groups of elements). The characteristics to be addressed may include,
+but are not limited to:
+1. Persistence — indicate which elements of the model must persist
+   beyond a transaction or session, including the conditions under
+   which persistence may no longer be required, and the period of
+   persistence;
+2. Size — indicate the anticipated number of instances of each
+   element;
+3. Security and Privacy — indicate which elements are of a
+   particularly sensitive nature requiring specific access or
+   disclosure measures, or privacy constraints;
+4. Legal and Regulatory — indicate which elements require specific
+   data retention, archiving, audit trail logging, or other measures
+   to meet legal or regulatory obligations. All legal and regulatory
+   requirements concerning information or data should be identified as
+   being as such even if listed under other topic headings
+   (e.g. privacy requirements imposed by a government regulator should
+   be identified as being legal and regulatory requirements even if
+   they are listed under security and privacy);
+5. Confidentiality – indicate any specific confidentiality
+   requirements associated with the information elements.
+6. Integrity – indicate any specific integrity or validity
+   requirements associated with the information elements.
+7. Availability – indicate any specific availability requirements
+associated with the information elements.  Note that items such as
+backup and recovery are not specifically addressed here but rather in
+the Performance and Reliability Behaviour subsection, or as part of
+the Component Model.
+
+*** Infrastructure Model 
+For IT systems an infrastructure model may be required where the
+underlying servers, storage media, etc, are defined.
+
+*** Integration and Network Design 
+Applies to a solution where the underlying comms network must be
+defined.  Define the conceptual aspects of network or integration
+mechanisms required to interconnect components. The Component Model
+addresses interface mechanisms, principally from an application or
+service level perspective. Here is included additional information
+relating to the communication mechanisms, protocols or network
+models. Typically, details of this subsection are further developed as
+part of the Integration Specification.  Both functional and
+non-functional characteristics of integration and network behaviour
+should be included.
+
+*** Security Architecture 
+The purpose of this section is to describe the security controls that
+will be incorporated into the solution. Ensure that security
+components are refined in this section.
+
+**** Network Security 
+This section is used to describe the networking layer security
+controls that will be incorporated in to infrastructure.  In
+particular, the following topics are to be covered: Describe the
+network architecture being deployed, eg single, double or triple
+tiered.  What environment will the solution be hosted in, eg a
+dedicated hosting facility, if so which one?  Describe how network
+security infrastructure being used to protect system components, eg
+firewalls/ filter routers/VLANs Describe the communications protocols
+used, eg HTTP, Telnet between the various components Describe how
+users will connect to the system, eg via the Internet or via a VPN.
+Note it is important to consider all users, including customers, FoH
+staff, operations staff supporting the platform and also any vendor
+access required for support Describe where any encryption technology
+will be used to protect data in transit and what encryption system
+will be used Describe any system to system connections.  Identify how
+systems will authenticate each other Intrusion Detection systems.
+Describe if and how IDS will be used Describe any connections required
+to give vendors access to platforms for support
+
+**** System Security 
+Identify the following for each platform being deployed:
+- Its purpose, eg web server, application server etc
+- Software being deployed, e.g. SUN Solaris v8.0
+- The software build standard to be applied to the platform,
+  referencing standard builds where possible
+- Indicate where non SOE products will be used
+- Host Based Intrusion Detection and/or File Integrity Checking
+
+**** Application Security 
+Describe the following:
+- Authentication.  How will users authenticate to the system, describe
+  detailed password rules.  Describe where external authentication
+  infrastructure is being used, e.g. CAS.
+- Authorisation.  Describe the categories of users and the
+  functionality they will have.  Include all users, customers, FoH
+  staff, operations staff supporting the platform
+- Audit/Logging.  Describe what will be logged and describe any
+  external auditing or logging platforms being used
+- Anti virus software being deployed
+
+**** Operation Security 
+Describe at a high level any security related process and how the
+system will support these processes: In particular; the following
+topics are to be considered and covered:
+- Subsystems mapped to nodes
+- Nodes have mapped to security zones
+- Assets and actor groups mapped to zones
+- Security zones mapped to the client environment How do users
+register or enrol with the service?  How are authentication
+credentials issued and reset?  How are user access rights determined
+and implemented?  Will approval processes for user access be
+developed, if so by whom?  How are user access rights revoked?
+Cryptographic key management processes Security Incident Response
+process Vulnerability management – including application of patches
+and vulnerability assessments Special information classification and
+handling processes
+
+**** Security Patterns 
+The purpose of this section is documenting which security patterns
+were selected for the solution. The selection of security patterns is
+based on the consideration of security risks. Populate the table below
+with security pattern details. If no patterns are applied leave this
+section in but blank.
+| Pattern Design | Type | Comment |
+| Pattern Type (e.g. Logging, Compliance, Storage). | Application / Design / Implementation | Description of Security Pattern and reference how the pattern has been implemented if not detailed above. |
+
+*** Privacy   
+Define the architecture and the design features that will be provided
+to protect personal information in order to meet the privacy
+requirements for the solution.
+
+*** Lawful Interception 
+If applicable, describe how Lawful Intercept facilities are provided
+and/or supported by this solution
+
+*** Performance 
+Provide an overview of the architectural features impacting
+performance (e.g, throughput and response times, transit times,
+jitter, etc)
+
+**** Performance Modelling 
+Provide data or reference to a model used to estimate system
+performance. Compare to performance requirements from the RDD. The
+analysis should include typical performance and worst-case scenarios.
+
+*** Reliability and Availability 
+Provide an overview of the architecture and operational features
+impacting system reliability and availability (e.g, equipment
+redundancy, mean time to repair (MTTR), scheduled downtime etc Ensure
+that automatic recovery processes are considered). Are there single
+points of failure (SPOF) in the solution?
+
+**** FMECA (Failure Modes Effect Criticality Analysis)
+If a FMECA is required, provide a reference to the FMECA and summarise
+the conclusions.
+**** Availability Modelling 
+Provide data or reference to a model used to estimate system
+availability. Compare to availability requirements from the RDD.]
+ 
+*** Scalability 
+Provide the limits available for growth in the use of the system
+(e.g, # of concurrent users,# of services under management, etc) , and
+identify the limiting points.  For Network Systems identify limits to
+the growth of the network [i.e, engineering limits].
+
+** IMPACTED SYSTEMS 
+*** System Requirements - <system component name>
+**** Relevant Use Cases 
+| Use Case ID | Use Case Name |
+|             |               |
+|             |               |
+|             |               |
+
+*** Solution Architecture Requirements 
+*The purpose of this section is to define the specific, well-formed*
+*requirements for impacted systems, and partition them in a manner that*
+*will facilitate solution definition.  When creating Solution*
+Architecture Requirements, each verifiable requirement defined in this
+section should be contained in a separate paragraph.  The source of
+all raw requirements should be captured in the Requirements
+Traceability Matrix, along with the cross-reference to the labelled
+requirements in this section.  This section contains the specific
+solution architecture requirements for <System/Component Name>.
+**** Security Architecture Requirements 
+The purpose of this section is to define the specific security
+requirements that have been determined based on the consideration of
+security risks
+
+*** Solution Description 
+This section details the provider’s solution response pertaining to
+the specific system/component that they are to deliver. If a
+specification document has been referenced in this section, ensure the
+vendor’s document has been attached in the appendix section of this
+document.
+** OPERATIONS 
+Provide an overview of the facilities provided to facilitate the
+efficient operation of the system. Confirm that the planned facilities
+meet the non-functional requirements detailed in the RDD. NB, This
+document must be approved by the Operations Stakeholder to confirm the
+operations facilities do meet the needs of the operations group who
+will manage the platform. The subsections may need to be augmented to
+include particular concerns.
+
+*** Alarms 
+Detail the source of alarms and the systems to be used to provide root
+cause alarms and presentation to Operations Staff. If a FMECA has been
+used to plan the alarm coverage reference the FMECA.  Give
+consideration to the Monitoring and Alarming mechanisms
+
+*** Reporting 
+Detail the reporting facilities and the planned reports that will be
+available for management of the system. Confirm the planned reports
+can be used to manage the achievement of non-functional requirements
+detailed in the RDD. For example, include description of any network
+management reports that will be available with measures required for
+key management metrics, for legally mandatory reports, and for meeting
+Operational Level Agreements (OLAs).
+
+*** Capacity Planning 
+Detail the monitoring and specialist reporting that will be provided
+to enable the capacity management process.
+
+*** Charging and Rating 
+Detail the sources of charging data and the systems used to maintain
+charging integrity assurance. Detail how charging will be provided to
+enable the charging assurance process to be maintained by
+Operations. Detail how the rating process handling the charge records
+will work.
+
+** SOLUTION ACCEPTANCE CRITERIA  
+Explicitly define the criteria to be used when assessing the
+implemented solution. These can be included in this section directly
+or by reference to the Solution Architecture Requirements and
+Acceptance Criteria deliverables corresponding to this
+solution. Consideration of such criteria should facilitate definition
+of a solution that not only meets requirements, but also testable.  It
+should be noted that the criteria here relate to the overall
+initiative. Specific criteria relating to individual subsets are
+defined in the relevant Solution Specification. Thus, for example,
+there may be an overall performance requirement that is of interest to
+the client. This would be the subject of these acceptance
+criteria. However, the allocation of performance budget to individual
+subsets of the solution would be subject of the verifiable
+requirements in the corresponding Solution Specification.
+
+** IMPLEMENTATION AND MIGRATION
+Address the overall approach to implementation. This would include
+strategy for migration from existing processes and systems, as well as
+data migration considerations. Typically this section will define
+phases of implementation that would minimise the impact on business
+operation whilst providing additional business value with each phase.
+
+*** Architecture Migration Plan 
+**** Migration Plan 
+Insert an Architecture Migration Plan. This plan should address the
+overall approach to implementation of the new architecture and
+complement the details written in section 6 Implementation and
+Migration. Examples of the types of information which may be found
+here are:
+- the sequencing of the migration
+- new infrastructure requirements
+- list of any potential technology or infrastructure retirements
+  caused by this plan
+- business impacts
+- plan for data migration
+- RACI for plan and associated activities
+
+**** Dependencies List
+This section should contain any dependencies of the plan from section
+6.1.1 above. All issues and risks identified should be managed via the
+BI’s issues and risk management processes.  All Assumptions of this
+plan and dependencies should list listed in section 2.5 Architectural
+Risks and Assumptions.
+
+** UPDATED TRACEABILITY MATRIX 
+Refer to the Traceability Matrix for this project.  Provide a brief
+overview of the outcome of requirements traceability at the time of
+the SAD preparation. Confirm issues and risks are captured. NB, the
+Traceability Matrix is a living document (subject to change
+management) for the life of the project!
+
+** REFERENCES 
+| Document Number | Title |
+|                 |       |
+
+** DEFINITIONS 
+The following words, acronyms and abbreviations are referred to in
+this document.
+| Term | Definition |
+| CQ | Compliance Questionnaire |
+
+** ATTACHMENTS 
+| Document Number | Title |
+|                 |       |
+
+** SIGN-OFF 
+The completion of the sign-off page is a testament by the signatories
+below that the following has been achieved or agreed:
+- The document has been peer reviewed and all defects have been fixed
+- The document is complete and accurate
+- This document will be placed under configuration control
+|--------------------------+---|
+| Reviewed Revision Number |   |
+| Baseline Revision Number |   |
+| Baseline Date            |   |
+| Author                   |   |
+|--------------------------+---|
+                        
+
+|-------------------------+---------------------------------------------------------------+----------------+------------------------|
+| Organisational Position | *Insert organisational position of person approving document* |                |                        |
+| Signature               | *can be electronic authorisation, e.g. email*                 | Date           | <Insert date approved> |
+| Name                    | *Insert name of person authorising document*                  | Contact Number | <Insert number>        |
+| Role                    | *Lead Solution Architect*                                     |                |                        |
+|-------------------------+---------------------------------------------------------------+----------------+------------------------|
+
+|-------------------------+---------------------------------------------------------------+----------------+----------------------|
+| Organisational Position | *Insert organisational position of person approving document* |                |                      |
+| Signature               | *can be electronic authorisation, e.g. email*                 | Date           | Insert date approved |
+| Name                    | *Insert name of person authorising document*                  | Contact Number | Insert number        |
+| Role                    | *Contributing Solution Architect(s)  (if applicable)*         |                |                      |
+|-------------------------+---------------------------------------------------------------+----------------+----------------------|
+
+*** Comments 
+    
+*** Documentation Location 
+|-------------------------------------------------------------------+-------------------------------------------------------|
+| Master Hard copy                                                  | Master Electronic                                     |
+|-------------------------------------------------------------------+-------------------------------------------------------|
+| *State where stored, or write ‘NA’ if there are no paper copies.* | *State where stored e.g. Stored in DM TAF repository* |
+|-------------------------------------------------------------------+-------------------------------------------------------|                                                                    |                                                       |
+  
+** DOCUMENT CONTROL SHEET  
+*The purpose of this section is to capture all changes made to the*
+*content of document.  Contact for Enquiries and Proposed Changes If*
+*you have any questions regarding this document or would like to*
+*suggest an improvement, contact:*
+|-------------+------------------------|
+| Name        | <Contact Name>         |
+| Designation | < Contact Designation> |
+| Phone       | <Contact Phone>        |
+| Fax         | <Contact Fax>          |
+|-------------+------------------------|    
+Record of Issues
+| Issue No | Issue Date | Nature of Amendment | Author |
+|          | <date>     |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+|          |            |                     |        |
+
+This publication has been prepared and written by <Insert Organization
+Name> , and is copyright. Other than for the purposes of and subject
+to the conditions prescribed under the Copyright Act, no part of it
+may in any form or by any means (electronic, mechanical, microcopying,
+photocopying, recording or otherwise) be reproduced, stored in a
+retrieval system or transmitted without prior written permission from
+the document controller. Product or company names are trademarks or
+registered trademarks of their respective holders.or its nominated
+agent <insert name>
+
+Note for other readers: The contents of this publication are subject
+to change without notice. All efforts have been made to ensure the
+accuracy of this publication. Notwithstanding, <Insert Organization
+Name> does not assume responsibility for any errors nor for any
+consequences arising from any errors in this publication.
+** Template CONTROL SHEET
+The purpose of this section is to capture all changes made to the
+template. This page can be deleted if it is not required by a project.
+Contact for Enquiries and Proposed Changes If you have any questions
+regarding this document template or have any suggestions for improving
+the same, please contact:
+|-------------+---|
+| Name        |   |
+| Designation |   |
+| Phone       |   |
+|-------------+---|  
+Record of Template Issues
+| Issue No | Issue Date | Nature of Amendment            | Author |
+|----------+------------+--------------------------------+--------|
+|      0.1 |            | Draft Version of the template. | Suraj  |
+|----------+------------+--------------------------------+--------|
