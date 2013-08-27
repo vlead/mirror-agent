@@ -43,7 +43,7 @@ it achieves the following:
 - It describes how the development and deployment of the solution can
   be phased if this is required to meet needs and or to meet
   technology constraints
-** Project Overview and Status 
+* PROJECT OVERVIEW AND STATUS 
 - VLEAD (Virtual Labs Engineering and Architecture Division) team was
 setup in June 2012 as a central engineering team for integrating all
 the virtual-labs (around 180 in number) across all disciplines and
@@ -59,8 +59,7 @@ of *Virtual Labs* in case of unforeseen disasters or catastropes.
   of multiple sites to ensure better availability, reliability and
   performance.
 
-** Project Scope and Objectives 
-* SCOPE
+* PROJECT SCOPE 
  - The scope of this project is to have the sources of all
 the Virtual-labs mirrored at one of the servers at IIT
 Delhi. Additionally, other critical data on VLEAD VMs and Containers
@@ -247,6 +246,20 @@ single decision and each decision in a table format.
 |                        |                                                                                                                          |       |                                   |
 | Related Decisions      |                                                                                                                          |       |                                   |
 |------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
+** Feasibility Analysis
+|------+---------------------------+----------------------+---------+------------+-------------+------------------+---|
+| SlNo | From                      | Network              | Size    | Time       | Speed       | Date/Time        |   |
+|------+---------------------------+----------------------+---------+------------+-------------+------------------+---|
+|    1 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 123.0secs  | 338.705Kbps | 2013-08-27 14:30 |   |
+|    2 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 110.2secs  | 406.447Kbps | 2013-08-27 15:20 |   |
+|    3 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 132.1secs  | 315.373Kbps | 2013-08-27 16:00 |   |
+|    4 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 94.34MB | 1285.7secs | 601.096Kpbs | 2013-08-27 16:30 |   |
+|    5 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38  | 94.34MB | 891.6secs  | 866.789Kpbs | 2013-08-27 17:45 |   |
+|    6 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 94.34MB |            |             |                  |   |
+|    7 | IIITH STPI(196.12.53.130) |                      | 1.1GB   |            |             |                  |   |
+|      |                           |                      | 1.1GB   |            |             |                  |   |
+|      |                           |                      | 1.1GB   |            |             |                  |   |
+    
 ** Outstanding Issues 
 Key Architectural Issues
 |------------------+-------------------+-----------------------------------------------------+-------|
@@ -320,11 +333,13 @@ details, etc.  EG, Routing protocols, etc
  |------+----------------+--------------+---------+-----------+---------------------------------|
  |    1 | Labs           | Total number | 86      | 180       |                                 |
  |      |                | Total Size   | 88GB    | 185GB     | Estimated based on average size |
+ |      |                | Average Size | 1.02GB  | 1.02GB    |                                 |
  |      |                | Max Size     | 25G     | 25G       |                                 |
  |      |                | Min Size     | 1.2MB   | 1.2MB     |                                 |
  |      |                |              |         |           |                                 |
  |    2 | VMs/Containers | Total number | 29      | 53        |                                 |
  |      |                | Total Size   | 153GB   | 280GB     | Estimated based on average size |
+ |      |                | Average Size | 5.28GB  | 5.28GB    |                                 |
  |------+----------------+--------------+---------+-----------+---------------------------------|
 *** Data Security
     - The mirrored data is not compressed or encrypted and will have
@@ -413,6 +428,7 @@ analysis should include typical performance and worst-case scenarios.
 ** Alarms and Notifications 
  - No automated alarms will configured. Will be tackled on a reactive
    basis as per the escalation matrix.
+ - Email notifications will be configured 
 ** Reporting 
  - No Reporting mechanisms are implemented as part of this solution.
 ** Capacity Planning 
