@@ -1,0 +1,143 @@
+#+title:   VLEAD Grand Prix Mirror Sources Requirement (D10)
+#+author:  Chandan
+#+updated: Suraj
+#+date:    2013-07-29 Mon
+
+* Purpose of the document
+  This document details the tasks to be performed to deliver
+  requirement D10: Mirror sources and backups to IIT-D.
+  This document also provides the estimates at detail level.
+
+* Modification log
+|------+------------------------------------+---------+------------|
+|  Rev | Description                        | Author  |       Date |
+|------+------------------------------------+---------+------------|
+| 0.01 | Initial draft                      | Chandan | 2013-07-29 |
+| 0.02 | Revised estimate from 3 to 4 weeks | Chandan | 2013-08-05 |
+| 0.03 | Revised estimate based on analysis | Suraj   | 2013-08-25 |
+|------+------------------------------------+---------+------------|
+
+* Review log
+|-----+-----------------+----------+------------|
+| Rev | Review comments | Reviewer |       Date |
+|-----+-----------------+----------+------------|
+|     |                 |          |            |
+|     |                 |          |            |
+|     |                 |          |            |
+|-----+-----------------+----------+------------|
+
+* Estimate overview
+  Implementing this requirement will take about ~500 hours
+|------+-------------------------------------+--------------+----------|
+| Item | Task type                           | Task-type    | Estimate |
+|      |                                     | (short-code) |          |
+|------+-------------------------------------+--------------+----------|
+|    1 | Analysis                            | A            |          |
+|    2 | Implementation                      | I            |          |
+|    3 | Verifying(Testing)                  | T            |          |
+|    4 | Review                              | R            |          |
+|    5 | Documentatation                     | D            |          |
+|    6 | Management(10% of sum-total of 1-5) | M            |          |
+|------+-------------------------------------+--------------+----------|
+|      | Total                               |              |          |
+|------+-------------------------------------+--------------+----------|
+
+
+* Requirement details from "VLEAD Grand Prix Requirements" document
+** D10 Mirror sources and backups to IIT-D
+
+|-------+------------------------------------------------+----------|
+| ID    | Description                                    | Priority |
+|-------+------------------------------------------------+----------|
+| D10.1 | Identify the VLEAD technical contact point.    | Required |
+|       |                                                |          |
+| D10.2 | Define the escalation process.                 | Required |
+|       |                                                |          |
+| D10.3 | Define Disaster Recovery procedure.            | Required |
+|       |                                                |          |
+| D10.4 | Set up nightly sync of lab sources to a remote | Required |
+|       | server at IIT-D.                               |          |
+|       |                                                |          |
+| D10.5 | Set up nightly sync of VM and container        | Optional |
+|       | backup.                                        |          |
+|-------+------------------------------------------------+----------|
+
+* Tasks and estimates
+** D10.1 Identify the VLEAD technical contact point
+| ID      | Task                                                  | Type | Estimate |
+|         |                                                       |      | (hours)  |
+|---------+-------------------------------------------------------+------+----------|
+| T10.1.1 | Identify a VLEAD employee who will liaison with IIT-D | M    | 2        |
+|         | and introduce him/her to IIT-D                        |      |          |
+|---------+-------------------------------------------------------+------+----------|
+** D10.2 Define the escalation process
+
+| ID      | Task                                                   | Type | Estimate |
+|         |                                                        |      | (hours)  |
+|---------+--------------------------------------------------------+------+----------|
+| T10.2.1 | Document the escalation matrix and share it with IIT-D |      | 4        |
+
+** D10.3 Define the Disaster Recovery procedure
+| ID      | Task                                                   | Estimate |
+|         |                                                        |  (hours) |
+|---------+--------------------------------------------------------+----------|
+| T10.3.1 | Define the process to restore lab sources from backup. |       24 |
+|         | (Process, Tech-specs)                                  |          |
+|         |                                                        |          |
+| T10.3.2 | Verify the process to restore lab sources from backup  |       16 |
+|         | for one each of svn, git and bzr repository.           |          |
+|         | (Testing)                                              |          |
+|         |                                                        |          |
+| T10.3.3 | Define the process to restore containers from backup.  |       16 |
+|         | (Process, Tech-specs)                                  |          |
+|         |                                                        |          |
+| T10.3.4 | Verify the process to restore containers from backup.  |       16 |
+|         | (Testing)                                              |          |
+|         |                                                        |          |
+| T10.3.4 | Review and Documentation                               |       24 |
+|---------+--------------------------------------------------------+----------|
+| Total   |                                                        |       96 |
+|---------+--------------------------------------------------------+----------|
+
+** D10.4 Set up nightly sync of lab sources to an IIT-D server
+| ID      | Task                                                | Estimate |
+|         |                                                     |  (hours) |
+|---------+-----------------------------------------------------+----------|
+| T10.4.1 | Identify the mechanism of mirroring sources.        |       96 |
+|         | (Pre-analysis, techspecs-hardware,software,network) |          |
+|         |                                                     |          |
+| T10.4.2 | Identify a point of contact at IIT-D.               |        4 |
+|         |                                                     |          |
+| T10.4.3 | Identify and send the technical details that are    |        8 |
+|         | required from IIT-D.                                |          |
+|         |                                                     |          |
+| T10.4.4 | Verify if the information received from IIT-D is    |        8 |
+|         | sufficient for setting up mirroring.                |          |
+|         |                                                     |          |
+| T10.4.5 | Set up the mirroring                                |       80 |
+|         | (Development of scripts; deployment of server,      |          |
+|         | network, OS, tools, communication)                  |          |
+|         |                                                     |          |
+| T10.4.6 | Verify the mirroring                                |       32 |
+|         | (Testing, test-planning)                            |          |
+|         |                                                     |          |
+| T10.4.7 | Review and Documentation                            |       40 |
+|---------+-----------------------------------------------------+----------|
+| Total   |                                                     |      252 |
+|---------+-----------------------------------------------------+----------|
+** D10.5 Set up nightly sync of VMs and containers backup
+| ID      | Task                                         | Estimate |
+|         |                                              |  (hours) |
+|---------+----------------------------------------------+----------|
+| T10.5.1 | Set up the mirroring.                        |       40 |
+|         | (estimate is high due to large size of data) |          |
+|         | (estimate less as task similar to 10.4)      |          |
+|         |                                              |          |
+| T10.5.2 | Verify the mirroring.                        |       30 |
+|         | (Testing, test-planning)                     |          |
+|         |                                              |          |
+| T10.5.3 | Review and Documentation                     |       24 |
+|---------+----------------------------------------------+----------|
+| Total   |                                              |       94 |
+|---------+----------------------------------------------+----------|
+   
