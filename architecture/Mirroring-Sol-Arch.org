@@ -146,7 +146,8 @@ are also planned to be mirrored as part of this initiative.
 |----------+-------------------+----------------------------------------------------------------------------------|
 
 * SOLUTION OVERVIEW
-   [ Insert image of current system] 
+** Current Architecture Overview
+   [[./Current-Backup-Model.png]] 
   - Sources of all Virtual-labs are stored in the version-control
 VM(svn.virtual-labs.ac.in/bzr.virtual-labs.ac.in/git.virtual-labs.ac.in)
 at Virtual Labs DataCenter, IIIT Hyderabad. These sources are uploaded
@@ -160,12 +161,16 @@ by Virtual-labs community and VLEAD internally. This data is across
 different Virtual machines setup at Virtual Labs DataCenter, IIIT
 Hyderabad. Selected file-systems from all these VMs is already
 backed-up on the same storage server(SAN) in the existing data-center.
-** Architecture Overview 
+** Proposed Architecture Overview 
+   [[./Mirroring-Proposed.png]]
  - All the critical data(as described above) at IIIT DataCenter
    will be mirrored at an offsite location(IIT, Delhi) using a
    mechanism that syncs data overnight at a specified time everyday.
- - A cronjob running at the IIIT data-center would daily push all the
-   incremental data from the storage server(SAN) to the mirrored location.
+ - In Phase-I, a overnight cronjob would be scheduled at the IIIT
+   data-center to push all the virtual-lab sources from
+   version-control server to the mirrored location at IITD.
+ - In Phase-II, the cronjob would be modified to additionally backup
+   VLEAD service VMs from the storage server(SAN) to mirrored location at IITD.
 ** Architectural Decisions 
      - Here are a summary of significant decisions and the rationale behind
 the decisions used to derive the solution. This table represents a
@@ -262,47 +267,49 @@ Key Architectural Issues
                                                                                                                                                                                                                                                                                                
 ** Architectural Risks 
     Key architectural risks are as follows:
-|-----------------+-------------------------------------------------|
-| Risk [AR]       | Description                                     |                  |                                                 |
-|-----------------+-------------------------------------------------|
-| AR - 01         | Mirroring speed has an upper-limit equal to the |
-|                 | network latencies of ISPs and                   |
-|                 | hence the solution cannot be scaled infinitely. |
-| AR - 02         | Security is compromised as data travels using   |
-|                 | different ISPs over public network              |
-|-----------------+-------------------------------------------------|
+|-----------+-------------------------------------------------|
+| Risk [AR] | Description                                     |
+|-----------+-------------------------------------------------|
+| AR - 01   | Mirroring speed has an upper-limit equal to the |
+|           | network latencies of ISPs and                   |
+|           | hence the solution cannot be scaled infinitely. |
+| AR - 02   | Security is compromised as data travels using   |
+|           | different ISPs over public network              |
+|-----------+-------------------------------------------------|
                         
 * SOLUTION DESCRIPTION 
 ** Functional Model 
-Typically this section will describe end to end functionality such as
-setting up a call, such as billing, such as establishing a VLAN. The
-functional model will describe and or specify protocols, signalling
-details, etc.  EG, Routing protocols, etc
-   - Backup Schedule
-   - Recovery or Retries
+   - The backup would be scheduled at 8:00PM overnight everyday.
+   - In case of a failure, the backup process would be configured to
+     retry a maximum of three times after a gap of 15 minutes between
+     each trial.
 ** Re-use of Components 
- - Already existing rsnapshot backup/restore scripts and
-   configurations developed for backups to the local storage(SAN) server
+ - Pre-existing rsnapshot backup/restore scripts and configurations
+   developed for backups to the local storage(SAN) server at IIITH
    will be used as a baseline and will be re-used to implement the
-   solution. 
+   solution.
 ** Information and Data Characterstics 
 *** Data Types
-    - All lab sources data to be mirrored are in repostitories in the form of unix directories and flat-files.
+    - All lab sources data to be mirrored are in repositories in the form of unix directories and flat-files.
     - Databases would be dumped into flat(.sql) files and then backed-up as flat-files.
 *** Current and Estimated Data Size
- |------+----------------+--------------+---------+-----------+---------------------------------|
- | Slno |                | Criteria     | Current | Estimated | Comment                         |
- |------+----------------+--------------+---------+-----------+---------------------------------|
- |    1 | Labs           | Total number | 86      | 180       |                                 |
- |      |                | Total Size   | 88GB    | 185GB     | Estimated based on average size |
- |      |                | Average Size | 1.02GB  | 1.02GB    |                                 |
- |      |                | Max Size     | 25G     | 25G       |                                 |
- |      |                | Min Size     | 1.2MB   | 1.2MB     |                                 |
- |      |                |              |         |           |                                 |
- |    2 | VMs/Containers | Total number | 29      | 53        |                                 |
- |      |                | Total Size   | 153GB   | 280GB     | Estimated based on average size |
- |      |                | Average Size | 5.28GB  | 5.28GB    |                                 |
- |------+----------------+--------------+---------+-----------+---------------------------------|
+ |------+----------------+---------------+---------+-----------+---------------------------------|
+ | Slno |                | Criteria      | Current | Estimated | Comment                         |
+ |------+----------------+---------------+---------+-----------+---------------------------------|
+ |    1 | Labs           | Total number  | 86      | 180       |                                 |
+ |      |                | Total Size    | 88GB    | 185GB     | Estimated based on average size |
+ |      |                | Average Size  | 1.02GB  | 1.02GB    |                                 |
+ |      |                | Max Size      | 25G     | 25G       |                                 |
+ |      |                | Min Size      | 1.2MB   | 1.2MB     |                                 |
+ |      |                | Incremental   | 1GB     | 1.5GB     |                                 |
+ |      |                | size(per day) |         |           |                                 |
+ |------+----------------+---------------+---------+-----------+---------------------------------|
+ |    2 | VMs/Containers | Total number  | 29      | 53        |                                 |
+ |      |                | Total Size    | 153GB   | 280GB     | Estimated based on average size |
+ |      |                | Average Size  | 5.28GB  | 5.28GB    |                                 |
+ |      |                | Incremental   | 1GB     | 1.5GB     |                                 |
+ |      |                | size(per day) |         |           |                                 |
+ |------+----------------+---------------+---------+-----------+---------------------------------|
 *** Data Security
     - The mirrored data is not compressed or encrypted and will have
       the same file-system structure as on the source
@@ -327,7 +334,7 @@ details, etc.  EG, Routing protocols, etc
      - Proposed system: *IBM System x3650 M4*      
          http://www-03.ibm.com/systems/in/x/hardware/rack/x3650m4/index.html
 ** Integration and Network Design 
-   - This needs to be *planned* and updated
+   - A dedicated 2Mbps link is proposed for the mirroring system at IITD
 ** Security Architecture 
   - This section describes the security controls that will be
     incorporated into the solution.
@@ -360,21 +367,26 @@ allowed to be running out of the system.
    solution to cater to safeguard private data. This is a risk which
    is mitigated by having security at system level and physical level.
 ** Performance 
-Provide an overview of the architectural features impacting
-performance (e.g, throughput and response times, transit times,
-jitter, etc)
+ - The performance of the system would greaterlly depend on the
+     network speed of the ISP at both source(IIIT Hyderabad) and
+     mirrored location(IITD) and hence
 
 *** Performance Modelling 
-Provide data or reference to a model used to estimate system
-performance. Compare to performance requirements from the RDD. The
-analysis should include typical performance and worst-case scenarios.
-**** STPI to SIFY Link
-
-|   |   |   |   |   |
-|---+---+---+---+---|
-|   |   |   |   |   |
-
-**** STPI to II
+ - 
+[[./Performance Analysis Model.png]]
+ - Following analysis was done to estimate the backup time
+|-----------------------+------------+-------------+---------+---------+----------+------------------|
+|                       | Source     | Destination | Average | Average | Average  | Comments         |
+| Description           | upload     | download    | Size    | Time    | Achieved |                  |
+|                       | Link-speed | Link-speed  | (GB)    | (Hrs)   | Speed    |                  |
+|                       | (Mbps)     | (Mbps)      |         |         | (Mbps)   |                  |
+|-----------------------+------------+-------------+---------+---------+----------+------------------|
+| STPI-IITH->IITD       | 4          | 1           | 1.38    | 4.61    | 0.73     |                  |
+|-----------------------+------------+-------------+---------+---------+----------+------------------|
+| STPI-IITH->SIFY-IIITH | 4          | 8           | 1.38    | 0.64    | 4.93     | Seems to be high |
+|                       |            |             |         |         |          | because of data  |
+|                       |            |             |         |         |          | compression      |
+|-----------------------+------------+-------------+---------+---------+----------+------------------|
 ** Reliability and Availability 
  - The solution is required to be available all the time (24*7*365).
  - Any outages at source or target mirror locations should be planned
