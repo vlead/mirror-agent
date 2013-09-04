@@ -34,10 +34,6 @@ it achieves the following:
   review.
 - It unambiguously defines the overall solution to the proposed
   requirements of the initiative.
-- It partitions the solution into parts that can be individually
-  specified and allocated to appropriate groups.
-- It assigns responsibility for meeting functional and non-functional
-  requirements to each part.
 - It provides a basis for assessment of the overall solution once
   implemented.
 - It describes how the development and deployment of the solution can
@@ -84,17 +80,14 @@ are also planned to be mirrored as part of this initiative.
 |                 | Venkatesh Choppella | Principal Investigator | LEVEL 3          | venkatesh.choppella@iiit.ac.in | +91-965-2740281 |
 |                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
 |-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
-| Technology      | Chandan Gupta       | IT Manager             | LEVEL 2          | chandan@virtual-labs.ac.in     | +91-970-3330781 |
+| Technology      | Chandan Gupta       | Technical Manager      | LEVEL 2          | chandan@virtual-labs.ac.in     | +91-970-3330781 |
 | Stakeholders    |                     | (IIIT Hyderabad)       |                  |                                |                 |
-| (IT, Vendors,   | Kuldeep Singh       | Engineer(??)           | LEVEL 2          | kuldeep.002@gmail.com          | +91-11-64674687 |
+| (IT, Vendors,   | Kuldeep Singh       | Engineer               | LEVEL 2          | kuldeep.002@gmail.com          | +91-11-64674687 |
 | Networks etc)   |                     | (IIT Delhi)            |                  |                                |                 |
 |                 | Suraj Ketan Samal   | Engineer               | LEVEL 1          | suraj@virtual-labs.ac.in       | +91-868-6160862 |
 |                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
 |                 | Technical Support   | Technical Support      | LEVEL 0          | engg@virtual-labs.ac.in        | +91-40-66531592 |
 |                 |                     | (IIIT Hyderabad)       |                  |                                |                 |
-|-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
-| Other           | ??                  | ??                     | ??               | ??                             |              ?? |
-| Stakeholders    |                     |                        |                  |                                |                 |
 |-----------------+---------------------+------------------------+------------------+--------------------------------+-----------------|
 
 ** Escalation Matrix
@@ -141,7 +134,6 @@ are also planned to be mirrored as part of this initiative.
 |          |                   |                                                                                  |
 | ASS-02   | Infrastructure    | Infrastructure at IIT Delhi will need to be setup within appropiate time-frames. |
 |          |                   | It should be accessible from Virtual-labs datacenter,IIIT Hyderabad.             |
-|          |                   | It should be linux based machine and accessible with diskspace (~1TB)            |
 |          |                   |                                                                                  |
 | ASS-03   | Data requirements | Data content and format for the mirroring-setup  will not vary without           |
 |          |                   | agreement between VLEAD,IIIT Hyderabad and Virtual-labs,IIT Delhi teams          |
@@ -167,7 +159,7 @@ provided by VLEAD (eg. ldap, developer-portal, ns, mail) which is used
 by Virtual-labs community and VLEAD internally. This data is across
 different Virtual machines setup at Virtual Labs DataCenter, IIIT
 Hyderabad. Selected file-systems from all these VMs is already
-backed-up on the same storage server(SAN) in the data-center.
+backed-up on the same storage server(SAN) in the existing data-center.
 ** Architecture Overview 
  - All the critical data(as described above) at IIIT DataCenter
    will be mirrored at an offsite location(IIT, Delhi) using a
@@ -246,41 +238,27 @@ single decision and each decision in a table format.
 |                        |                                                                                                                          |       |                                   |
 | Related Decisions      |                                                                                                                          |       |                                   |
 |------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
-** Feasibility Analysis
-|------+---------------------------+----------------------+---------+------------+-------------+------------------+---|
-| SlNo | From                      | Network              | Size    | Time       | Speed       | Date/Time        |   |
-|------+---------------------------+----------------------+---------+------------+-------------+------------------+---|
-|    1 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 123.0secs  | 338.705Kbps | 2013-08-27 14:30 |   |
-|    2 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 110.2secs  | 406.447Kbps | 2013-08-27 15:20 |   |
-|    3 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 5.08MB  | 132.1secs  | 315.373Kbps | 2013-08-27 16:00 |   |
-|    4 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 94.34MB | 1285.7secs | 601.096Kpbs | 2013-08-27 16:30 |   |
-|    5 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38  | 94.34MB | 891.6secs  | 866.789Kpbs | 2013-08-27 17:45 |   |
-|    6 | IIITH STPI(196.12.53.130) | IITD(118.102.191.38) | 94.34MB |            |             |                  |   |
-|    7 | IIITH STPI(196.12.53.130) |                      | 1.1GB   |            |             |                  |   |
-|      |                           |                      | 1.1GB   |            |             |                  |   |
-|      |                           |                      | 1.1GB   |            |             |                  |   |
-    
 ** Outstanding Issues 
 Key Architectural Issues
-|------------------+-------------------+-----------------------------------------------------+-------|
-| Issue Identifier | Area(s) Impacted  | Description                                         | Owner |
-|------------------+-------------------+-----------------------------------------------------+-------|
-| ISS – 01         | Backup Data       | Version control is currently in a different network |       |
-|                  |                   | (10.4.7.x) and needs to be migrated to (10.4.12.x)  |       |
-|                  |                   | network before the solution is implemented.         |       |
-|                  |                   |                                                     |       |
-| ISS - 02         | Security          | Data on mirrored-location can be accessible to      |       |
-|                  |                   | anyone having physical access to the system as it   |       |
-|                  |                   | is a file-system backup.                            |       |
-|                  |                   |                                                     |       |
-| ISS - 03         | Backup Tool       | Rsync has problem with bigger file-sizes            |       |
-|                  |                   |                                                     |       |
-| ISS - 04         | Network Bandwidth | Overall link bandwidth with current setup is        |       |
-|                  |                   | is not reliable and too slow. We should probably    |       |
-|                  |                   | investigate use of a dedicated service line from    |       |
-|                  |                   | IIIT Hyderabad to IITD based on the cost and        |       |
-|                  |                   | future scope/plan                                   |       |
-|------------------+-------------------+-----------------------------------------------------+-------|
+|------------------+-------------------+-----------------------------------------------------+------------|
+| Issue Identifier | Area(s) Impacted  | Description                                         | Mitigation |
+|------------------+-------------------+-----------------------------------------------------+------------|
+| ISS – 01         | Backup Data       | Version control is currently in a different network |            |
+|                  |                   | (10.4.7.x) and needs to be migrated to (10.4.12.x)  |            |
+|                  |                   | network before the solution is implemented.         |            |
+|                  |                   |                                                     |            |
+| ISS - 02         | Security          | Data on mirrored-location can be accessible to      |            |
+|                  |                   | anyone having physical access to the system as it   |            |
+|                  |                   | is a file-system backup.                            |            |
+|                  |                   |                                                     |            |
+| ISS - 03         | Backup Tool       | Rsync has problem with bigger file-sizes            |            |
+|                  |                   |                                                     |            |
+| ISS - 04         | Network Bandwidth | Overall link bandwidth with current setup is        |            |
+|                  |                   | is not reliable and too slow. We should probably    |            |
+|                  |                   | investigate use of a dedicated service line from    |            |
+|                  |                   | IIIT Hyderabad to IITD based on the cost and        |            |
+|                  |                   | future scope/plan                                   |            |
+|------------------+-------------------+-----------------------------------------------------+------------|
                                                                                                                                                                                                                                                                                                
 ** Architectural Risks 
     Key architectural risks are as follows:
@@ -295,22 +273,6 @@ Key Architectural Issues
 |-----------------+-------------------------------------------------|
                         
 * SOLUTION DESCRIPTION 
-Provide details of the actual solution. In cases where more than one
-solution is explored only the selected one is documented here.  The
-presentation of the solution description should follow from the design
-methodology used to create the solution. IE, an end to end functional
-model may be the key view for a telephony product, e.g., the numbering
-scheme. A component model will then follow from the end to end
-functional view. The template structure described below should be used
-as required (marked NA if not applicable or augmented if necessary)
-NB, the Requirements Traceability Matrix will cross reference to the
-solutions described in this section.  Note that for UI (typically Web
-and WAP) applications a User Interface Design Document (UIDD) template
-is available to assist with the description of the Design.  The UIDD
-describes front-end interface design, functionality and user
-experience for a screen development (typically a Web or WAP) project,
-and is prepared in conjunction with the SAD or Detailed Design
-Document.
 ** Functional Model 
 Typically this section will describe end to end functionality such as
 setting up a call, such as billing, such as establishing a VLAN. The
@@ -353,15 +315,17 @@ details, etc.  EG, Routing protocols, etc
 *** Source(IIIT Hyderabad Datacenter)
      - No additional infrastructure is required at IIITH Datacenter for this solution
 *** Target(IIT Delhi DataCenter)   
-     - Following is the proposed specifications of the target system
+     - Following are required specifications of the target system
        where the mirrored data is required to be kept:
-	+ Any Standard Server(Multi-core Intel Xeon Series Processor)                                           
+	+ Standard Rack mounted Server(Multi-core Intel Xeon Series Processor)                                           
 	+ Linux based OS (CentOS preferred)
 	+ Minimum 16GB of RAM                                      
 	+ Atleast 1TB of available space after (RAID)  
 	+ Redundant power backup                                  
 	+ RAID Configured for reliability and optimum performance.
-	+ Multiple network interfaces (if possible).      
+	+ Multiple network interfaces (if possible).
+     - Proposed system: *IBM System x3650 M4*      
+         http://www-03.ibm.com/systems/in/x/hardware/rack/x3650m4/index.html
 ** Integration and Network Design 
    - This needs to be *planned* and updated
 ** Security Architecture 
@@ -404,7 +368,13 @@ jitter, etc)
 Provide data or reference to a model used to estimate system
 performance. Compare to performance requirements from the RDD. The
 analysis should include typical performance and worst-case scenarios.
+**** STPI to SIFY Link
 
+|   |   |   |   |   |
+|---+---+---+---+---|
+|   |   |   |   |   |
+
+**** STPI to II
 ** Reliability and Availability 
  - The solution is required to be available all the time (24*7*365).
  - Any outages at source or target mirror locations should be planned
@@ -435,23 +405,58 @@ analysis should include typical performance and worst-case scenarios.
  - Capacity planning for the entire solution is done in first stage
    itself and hence not required during operational phase of this
    project.
-
 * SOLUTION ACCEPTANCE CRITERIA  
  - The solution should be fast enough to run over-night and not affect
    normal operations of the systems and network.
 * IMPLEMENTATION AND MIGRATION
  - The solution is proposed to be implemented in two phases:
-  | Phase    | Description       | Dependencies |
-  |----------+-------------------+--------------|
-  | Phase-I  | Mirroring of Labs | None         |
-  | Phase-II | Mirroring of VMs  | Phase-I      |
-  |----------+-------------------+--------------|
- - Since, the solution is built from scratch, no migration requirements
-   are to be addressed/
+  | Phase    | Description                   | Dependencies |
+  |----------+-------------------------------+--------------|
+  | Phase-I  | Mirroring of Labs             | None         |
+  | Phase-II | Mirroring of VMs              | Phase-I      |
+  |          | and Disaster recovery testing |              |
+  |----------+-------------------------------+--------------|
+ - Detailed estimates of subtasks can be found in D10-mirror-sources.org
+** Efforts and Schedule(Phase-I)
+|--------------+------------------+-----------------------+-----------------------+------------------------+------+------+------+------|
+|              | Aug              | Sep                   | Oct                   | Nov                    | Dec  | Jan  | Feb  | Mar  |
+|              | 2013             | 2013                  | 2013                  | 2013                   | 2013 | 2013 | 2013 | 2013 |
+|--------------+------------------+-----------------------+-----------------------+------------------------+------+------+------+------|
+| Deliverables | - Start Analysis | - Complete Analysis   | - Develop and         | - Deploy final scripts | X    | X    | X    | X    |
+|              | - Tech-Specs     | - Manual mirror setup | install pilot scripts | - Test and Fix issues  |      |      |      |      |
+|              |                  | at IITD               | - Setup IITB mirror   | - Documentation        |      |      |      |      |
+|              |                  |                       | manually              |                        |      |      |      |      |
+|--------------+------------------+-----------------------+-----------------------+------------------------+------+------+------+------|
+| Effort       | 80hrs            | 80hrs                 | 80hrs                 | 80hrs                  | X    | X    | X    | X    |
+| Estimates    |                  |                       |                       |                        |      |      |      |      |
+|--------------+------------------+-----------------------+-----------------------+------------------------+------+------+------+------|
+
+** Efforts and Schedule(Phase-II)
+|--------------+-----------------|
+|              |                 |
+|              |                 |
+|--------------+-----------------|
+| Deliverables | Not yet planned |
+|              |                 |
+|              |                 |
+|              |                 |
+|--------------+-----------------|
+| Effort       | 180 hrs         |
+| Estimates    |                 |
+|--------------+-----------------|
+
+** Migration Requirements
+ - Since, the solution is built from scratch, no specific migration requirements
+   are to be addressed
 * REFERENCES 
-| Document Number | Title                                                     | Location                                                                 |
-| ???             | VLEAD Expert Committee Review - 25 July 2013 Presentation | <Vlead-Repo>/meetings-and-reviews/2013-07-25-expert-review/src/index.org |
-| ???             | VLEAD Engg Contract                                       | <Vlead-Repo>/official-docs/2012-06-02-vlead-engg-contract.pdf            |
+|-----------------+-----------------------------------------------------------+-----------------------------------------------------------------------------|
+| Document Number | Title                                                     | Location                                                                    |
+|-----------------+-----------------------------------------------------------+-----------------------------------------------------------------------------|
+| ???             | VLEAD Expert Committee Review - 25 July 2013 Presentation | <Vlead-Repo>/meetings-and-reviews/2013-07-25-expert-review/src/index.org    |
+| ???             | VLEAD Engg Contract                                       | <Vlead-Repo>/official-docs/2012-06-02-vlead-engg-contract.pdf               |
+|                 | Mirroring to IITD - Sub-tasks and Estimates               | <Vlead-Repo>/plans/project-plan/grand-prix/estimates/D10-mirror-sources.org |
+|-----------------+-----------------------------------------------------------+-----------------------------------------------------------------------------|
+
 * DEFINITIONS 
 The following words, acronyms and abbreviations are referred to in
 this document.
@@ -503,11 +508,11 @@ below that the following has been achieved or agreed:
 ** Comments 
    
 ** Documentation Location 
-|-------------------------------------------------------------------+-------------------------------------------------------|
-| Master Hard copy                                                  | Master Electronic                                     |
-|-------------------------------------------------------------------+-------------------------------------------------------|
-| *State where stored, or write ‘NA’ if there are no paper copies.* | *State where stored e.g. Stored in DM TAF repository* |
-|-------------------------------------------------------------------+-------------------------------------------------------|                                                                    |                                                       |
+|------------------+-------------------------------------------------------|
+| Master Hard copy | Master Electronic                                     |
+|------------------+-------------------------------------------------------|
+| None             | Stored in 'mirror' bzr repository on VLEAD server     |
+|------------------+-------------------------------------------------------|
   
 * DOCUMENT CONTROL SHEET  
 This section captures all changes made to the content of document. If
