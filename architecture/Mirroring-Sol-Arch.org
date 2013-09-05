@@ -245,25 +245,25 @@ single decision and each decision in a table format.
 |------------------------+--------------------------------------------------------------------------------------------------------------------------+-------+-----------------------------------|
 ** Outstanding Issues 
 Key Architectural Issues
-|------------------+-------------------+-----------------------------------------------------+------------|
-| Issue Identifier | Area(s) Impacted  | Description                                         | Mitigation |
-|------------------+-------------------+-----------------------------------------------------+------------|
-| ISS – 01         | Backup Data       | Version control is currently in a different network |            |
-|                  |                   | (10.4.7.x) and needs to be migrated to (10.4.12.x)  |            |
-|                  |                   | network before the solution is implemented.         |            |
-|                  |                   |                                                     |            |
-| ISS - 02         | Security          | Data on mirrored-location can be accessible to      |            |
-|                  |                   | anyone having physical access to the system as it   |            |
-|                  |                   | is a file-system backup.                            |            |
-|                  |                   |                                                     |            |
-| ISS - 03         | Backup Tool       | Rsync has problem with bigger file-sizes            |            |
-|                  |                   |                                                     |            |
-| ISS - 04         | Network Bandwidth | Overall link bandwidth with current setup is        |            |
-|                  |                   | is not reliable and too slow. We should probably    |            |
-|                  |                   | investigate use of a dedicated service line from    |            |
-|                  |                   | IIIT Hyderabad to IITD based on the cost and        |            |
-|                  |                   | future scope/plan                                   |            |
-|------------------+-------------------+-----------------------------------------------------+------------|
+|------------------+-------------------+-----------------------------------------------------+--------|
+| Issue Identifier | Area(s) Impacted  | Description                                         | Status |
+|------------------+-------------------+-----------------------------------------------------+--------|
+| ISS – 01         | Backup Data       | Version control is currently in a different network | Closed |
+|                  |                   | (10.4.7.x) and needs to be migrated to (10.4.12.x)  |        |
+|                  |                   | network before the solution is implemented.         |        |
+|                  |                   |                                                     |        |
+| ISS - 02         | Security          | Data on mirrored-location can be accessible to      | Open   |
+|                  |                   | anyone having physical access to the system as it   |        |
+|                  |                   | is a file-system backup.                            |        |
+|                  |                   |                                                     |        |
+| ISS - 03         | Backup Tool       | Rsync has problem with bigger file-sizes            | Open   |
+|                  |                   |                                                     |        |
+| ISS - 04         | Network Bandwidth | Overall link bandwidth with current setup is        | Open   |
+|                  |                   | is not reliable and too slow. We should probably    |        |
+|                  |                   | investigate use of a dedicated service line from    |        |
+|                  |                   | IIIT Hyderabad to IITD based on the cost and        |        |
+|                  |                   | future scope/plan                                   |        |
+|------------------+-------------------+-----------------------------------------------------+--------|
                                                                                                                                                                                                                                                                                                
 ** Architectural Risks 
     Key architectural risks are as follows:
@@ -297,16 +297,16 @@ Key Architectural Issues
  | Slno |                | Criteria      | Current | Estimated | Comment                         |
  |------+----------------+---------------+---------+-----------+---------------------------------|
  |    1 | Labs           | Total number  | 86      | 180       |                                 |
- |      |                | Total Size    | 88GB    | 185GB     | Estimated based on average size |
- |      |                | Average Size  | 1.02GB  | 1.02GB    |                                 |
- |      |                | Max Size      | 25G     | 25G       |                                 |
  |      |                | Min Size      | 1.2MB   | 1.2MB     |                                 |
+ |      |                | Max Size      | 25G     | 25G       |                                 |
+ |      |                | Average Size  | 1.02GB  | 1.02GB    |                                 |
+ |      |                | Total Size    | 88GB    | 185GB     | Estimated based on average size |
  |      |                | Incremental   | 1GB     | 1.5GB     |                                 |
  |      |                | size(per day) |         |           |                                 |
  |------+----------------+---------------+---------+-----------+---------------------------------|
  |    2 | VMs/Containers | Total number  | 29      | 53        |                                 |
- |      |                | Total Size    | 153GB   | 280GB     | Estimated based on average size |
  |      |                | Average Size  | 5.28GB  | 5.28GB    |                                 |
+ |      |                | Total Size    | 153GB   | 280GB     | Estimated based on average size |
  |      |                | Incremental   | 1GB     | 1.5GB     |                                 |
  |      |                | size(per day) |         |           |                                 |
  |------+----------------+---------------+---------+-----------+---------------------------------|
@@ -326,8 +326,8 @@ Key Architectural Issues
        where the mirrored data is required to be kept:
 	+ Standard Rack mounted Server(Multi-core Intel Xeon Series Processor)                                           
 	+ Linux based OS (CentOS preferred)
-	+ Minimum 16GB of RAM                                      
-	+ Atleast 1TB of available space after (RAID)  
+	+ 16GB of RAM                                      
+	+ 2TB of available space after (RAID)  
 	+ Redundant power backup                                  
 	+ RAID Configured for reliability and optimum performance.
 	+ Multiple network interfaces (if possible).
@@ -370,23 +370,45 @@ allowed to be running out of the system.
  - The performance of the system would greaterlly depend on the
      network speed of the ISP at both source(IIIT Hyderabad) and
      mirrored location(IITD) and hence
-
 *** Performance Modelling 
- - 
-[[./Performance Analysis Model.png]]
- - Following analysis was done to estimate the backup time
-|-----------------------+------------+-------------+---------+---------+----------+------------------|
-|                       | Source     | Destination | Average | Average | Average  | Comments         |
-| Description           | upload     | download    | Size    | Time    | Achieved |                  |
-|                       | Link-speed | Link-speed  | (GB)    | (Hrs)   | Speed    |                  |
-|                       | (Mbps)     | (Mbps)      |         |         | (Mbps)   |                  |
-|-----------------------+------------+-------------+---------+---------+----------+------------------|
-| STPI-IITH->IITD       | 4          | 1           | 1.38    | 4.61    | 0.73     |                  |
-|-----------------------+------------+-------------+---------+---------+----------+------------------|
-| STPI-IITH->SIFY-IIITH | 4          | 8           | 1.38    | 0.64    | 4.93     | Seems to be high |
-|                       |            |             |         |         |          | because of data  |
-|                       |            |             |         |         |          | compression      |
-|-----------------------+------------+-------------+---------+---------+----------+------------------|
+ - Performance of the solution is greaterly dependent on the ISP
+Link-speed and hence a small analysis was done to estimate the
+scheduled duration of backup.
+  [[./Performance Analysis Model.png]]
+ - Following two models were used to test and estimate the link-speed:
+    + *STPI-IIITH to IITD*: Sample test-data was sent from one of the
+      servers in IIITH on SIFY network to a test server located in IITD
+    + *STPI-IIITH to SIFY-IIITH*: Sample test-data was sent from one
+      of the servers at IIITH on SIFY network to another server on
+      IIITH on STPI network
+ - Results:
+|-----------------------+------------+-------------+---------+----------+----------+------------------------|
+|                       | Source     | Destination | Average | Average  | Average  | Comments               |
+| Description           | upload     | download    | Size    | Duration | Achieved |                        |
+|                       | Link-speed | Link-speed  | (GB)    | (Hrs)    | Speed    |                        |
+|                       | (Mbps)     | (Mbps)      |         |          | (Mbps)   |                        |
+|-----------------------+------------+-------------+---------+----------+----------+------------------------|
+| STPI-IITH->IITD       | 4          | 1           | 1.38    | 4.61     | 0.73     |                        |
+|                       |            |             |         |          |          |                        |
+|-----------------------+------------+-------------+---------+----------+----------+------------------------|
+| STPI-IITH->SIFY-IIITH | 4          | 8           | 1.38    | 0.64     | 4.93     | - STPI more reliable   |
+|                       |            |             |         |          |          | - Physical distance    |
+|                       |            |             |         |          |          | matters                |
+|                       |            |             |         |          |          | - Achieved bandwidth   |
+|                       |            |             |         |          |          | more because data gets |
+|                       |            |             |         |          |          | compressed             |
+|-----------------------+------------+-------------+---------+----------+----------+------------------------|
+  - Estimates:
+|----------+-----------+------------+-------------+-----------|
+|          | Estimated | Source     | Destination | Estimated |
+|          | Average   | Link-speed | Link-speed  | Duration  |
+|          | Daily     | upload     | download    | (Hrs)     |
+|          | Size(GB)  | (Mbps)     | (Mbps)      |           |
+|----------+-----------+------------+-------------+-----------|
+| Phase-I  | 1.5       | 4          | 2           | 2.5       |
+| Phase-II | 3         | 4          | 2           | 5         |
+|----------+-----------+------------+-------------+-----------|
+
 ** Reliability and Availability 
  - The solution is required to be available all the time (24*7*365).
  - Any outages at source or target mirror locations should be planned
