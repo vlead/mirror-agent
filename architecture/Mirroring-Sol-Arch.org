@@ -106,24 +106,25 @@ are also planned to be mirrored as part of this initiative.
 #+CAPTION: Key Stakeholders
 #+LABEL: tbl:Key Stakeholders
 
-|-----------------+---------------------+------------------------|
-| AREA / POSITION | NAME                | ROLE                   |
-|-----------------+---------------------+------------------------|
-| Prime           | Ranjan Bose         | Principal Investigator |
-| Stakeholders    |                     | (IIT Delhi)            |
-|                 | Venkatesh Choppella | Principal Investigator |
-|                 |                     | (IIIT Hyderabad)       |
-|-----------------+---------------------+------------------------|
-| Technology      | Chandan Gupta       | Technical Manager      |
-| Stakeholders    |                     | (IIIT Hyderabad)       |
-| (IT, Vendors,   | Kuldeep Singh       | Engineer               |
-| Networks etc)   |                     | (IIT Delhi)            |
-|                 | Suraj Ketan Samal   | Engineer               |
-|                 |                     | (IIIT Hyderabad)       |
-|                 | Technical Support   | Technical Support      |
-|                 |                     | (IIIT Hyderabad)       |
-|-----------------+---------------------+------------------------|
-|                 |                     |                        |
+|-----------------+---------------------+----------------------|
+| AREA / POSITION | NAME                | ROLE                 |
+|-----------------+---------------------+----------------------|
+| Prime           | Ranjan Bose         | Virtual-labs Project |
+| Stakeholders    |                     | Co-Investigator      |
+|                 |                     | (IIT Delhi)          |
+|                 | Venkatesh Choppella | VLEAD Project Head   |
+|                 |                     | (IIIT Hyderabad)     |
+|-----------------+---------------------+----------------------|
+| Technology      | Chandan Gupta       | Technical Manager    |
+| Stakeholders    |                     | (IIIT Hyderabad)     |
+| (IT, Vendors,   | Kuldeep Singh       | Project Associate    |
+| Networks etc)   |                     | (IIT Delhi)          |
+|                 | Suraj Ketan Samal   | Engineer             |
+|                 |                     | (IIIT Hyderabad)     |
+|                 | Tech Support Group  | Technical Support    |
+|                 |                     | (IIIT Hyderabad)     |
+|-----------------+---------------------+----------------------|
+|                 |                     |                      |
 ** Escalation Levels
 
 #+CAPTION: Escalation Levels
@@ -132,19 +133,23 @@ are also planned to be mirrored as part of this initiative.
 |------------------+---------------------+--------------------------------+-----------------|
 | Escalation Level | NAME                | Email                          |  CONTACT NUMBER |
 |------------------+---------------------+--------------------------------+-----------------|
-| LEVEL 4          | Ranjan Bose         | rbose.iitd@gmail.com           | +91-11-26591048 |
-|                  |                     |                                |                 |
+| LEVEL 3          | Ranjan Bose         | rbose.iitd@gmail.com           | +91-11-26591048 |
+|                  | (IIT Delhi)         |                                |                 |
 | LEVEL 3          | Venkatesh Choppella | venkatesh.choppella@iiit.ac.in | +91-965-2740281 |
-|                  |                     |                                |                 |
+|                  | (IIIT Hyderabad)    |                                |                 |
 |------------------+---------------------+--------------------------------+-----------------|
 | LEVEL 2          | Chandan Gupta       | chandan@virtual-labs.ac.in     | +91-970-3330781 |
-|                  |                     |                                |                 |
+|                  | (IIIT Hyderabad)    |                                |                 |
 | LEVEL 2          | Kuldeep Singh       | kuldeep.002@gmail.com          | +91-11-64674687 |
-|                  |                     |                                |                 |
+|                  | (IIT Delhi)         |                                |                 |
+|------------------+---------------------+--------------------------------+-----------------|
 | LEVEL 1          | Suraj Ketan Samal   | suraj@virtual-labs.ac.in       | +91-868-6160862 |
-|                  |                     |                                |                 |
+|                  | (IIIT Hyderabad)    |                                |                 |
+| LEVEL 1          | <To be Added>       | <To be Added>                  |   <To be Added> |
+|                  | (IIT Delhi)         |                                |                 |
+|------------------+---------------------+--------------------------------+-----------------|
 | LEVEL 0          | Technical Support   | engg@virtual-labs.ac.in        | +91-40-66531592 |
-|                  |                     |                                |                 |
+|                  | (IIIT Hyderabad)    |                                |                 |
 |------------------+---------------------+--------------------------------+-----------------|
 
 ** Escalation Matrix
@@ -458,7 +463,7 @@ single decision and each decision in a table format.
         + *IBM System x3650 M4*      
         + http://www-03.ibm.com/systems/in/x/hardware/rack/x3650m4/index.html
 ** Integration and Network Model 
-   - A dedicated 2Mbps link is proposed for the mirroring system at IITD
+   - A dedicated 2Mbps ISP link is proposed for the mirroring system at IITD
 ** Security Architecture 
   - This section describes the security controls that will be
     incorporated into the solution.
@@ -721,29 +726,30 @@ below that the following has been achieved or agreed:
                         
 
 |-------------------------+----------------------------------+----------------|
-| Organisational Position | Professor,                       |                |
+| Name                    | Ranjan Bose                      | Contact Number |
+|                         |                                  | +91-11-2659104 |
+| Organizational Position | Professor,                       |                |
 |                         | Dept. of Electrical Engineering, |                |
 |                         | IIT Delhi                        |                |
 |                         |                                  |                |
 | Signature               | <Attach e-mail approval          | Date           |
 |                         | or link to approval>             |                |
 |                         |                                  |                |
-| Name                    | Ranjan Bose                      | Contact Number |
-|                         |                                  | +91-11-2659104 |
-| Role                    | Principal Investigator,          |                |
+| Role                    | Project Co-Investigator,         |                |
 |                         | Virtual Labs Project             |                |
 |-------------------------+----------------------------------+----------------|
 
 |-------------------------+-------------------------------+------------------|
-| Organisational Position | Associate Professor,          |                  |
+| Name                    | Venkatesh Choppella           | Contact Number   |
+|                         |                               | +91-965-274-0281 |
+|                         |                               |                  |
+| Organizational Position | Associate Professor,          |                  |
 |                         | IIIT Hyderabad                |                  |
 |                         |                               |                  |
 | Signature               | <Attach e-mail approval       | Date             |
 |                         | or link to approval>          |                  |
 |                         |                               |                  |
-| Name                    | Venkatesh Choppella           | Contact Number   |
-|                         |                               | +91-965-274-0281 |
-| Role                    | Principal Investigator, VLEAD |                  |
+| Role                    | Head, VLEAD Project           |                  |
 |-------------------------+-------------------------------+------------------|
 
 ** Major Comments 
