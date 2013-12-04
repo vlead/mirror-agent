@@ -70,7 +70,7 @@ class MirrorAgent:
 	RSYNC_INCLUDES = ''	
 	RSYNC_CMD = RSYNC_BASE_CMD + RSYNC_COMPRESS_ARGS + RSYNC_VERBOSE_ARGS + RSYNC_ARCHIVE_ARGS
 	RETRIES = 3
-	POLL_TIMER = 30
+	POLL_TIMER = 300 
 	RSYNC_LOG = '_rsync-transfer.log'
 	MIRROR_LOG = 'mirroragent.log'
 
