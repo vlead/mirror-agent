@@ -157,14 +157,14 @@ class MirrorAgent:
 		print "MirrorAgent Monitor :"
 		if self.status == self.Status.RUNNING :
 			while self.proc.returncode == None :						
-				self.log('Progress=' + str(self.getprogress())
+				self.log('Progress=' + str(self.getprogress()))
 				self.proc.poll()					
-			if self.proc.returncode > 0 :
+			if self.proc.returncode >= 0 :
 				self.status = self.Status.SUCCESS
-				self.log('Rsync process(PID=' + self.proc.pid + ') completed')
+				self.log('Rsync process(PID=' + str(self.proc.pid) + ') completed successfully.')
 			else:
 				self.status = self.Status.FAILURE				
-				self.log('Rsync process(PID=' + self.proc.pid + ') failed with statuscode=' + self.proc.returnCode)
+				self.log('Rsync process(PID=' + str(self.proc.pid) + ') failed with statuscode=' + str(self.proc.returncode))
 			time.sleep(MirrorAgent.POLL_TIMER)			
 		return self.status
 

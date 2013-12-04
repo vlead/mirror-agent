@@ -31,4 +31,4 @@ if status == False :
 	sys.exit(-1)
 
 print 'Starting the Monitor:'
-print 'ExitStatus = ' + iitDelAgent.monitor()
+print 'ExitStatus = ' + str(iitDelAgent.monitor())
