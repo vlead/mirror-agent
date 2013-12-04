@@ -156,10 +156,10 @@ class MirrorAgent:
 		""" Report stats of the running rsync process """
 		print "MirrorAgent Monitor :"
 		if self.status == self.Status.RUNNING :
-			while self.proc.returnCode == None:						
-				self.log('Progress=' + self.getprogress())
+			while self.proc.returncode == None :						
+				self.log('Progress=' + str(self.getprogress())
 				self.proc.poll()					
-			if self.proc.returnCode > 0 :
+			if self.proc.returncode > 0 :
 				self.status = self.Status.SUCCESS
 				self.log('Rsync process(PID=' + self.proc.pid + ') completed')
 			else:
@@ -170,11 +170,11 @@ class MirrorAgent:
 
 	def getprogress(self):
 		""" Still not implemented - but is possible through the rsync process handle """
-		stdoutline = self.rsyncDesc.readline()			
-		rem = re.findall(r'to-check=(\d+)/(\d+)', stdoutline)
-		print rem
+		#stdoutline = self.rsyncDesc.readline()			
+		#rem = re.findall(r'to-check=(\d+)/(\d+)', stdoutline)
+		#print rem
 		#progress = (100 * (int(rem[0][1]) - int(rem[0][0]))) / total_files
-		return 100
+		return 0
 				
 	def log(self, line):
 		""" Output logs to a logfile """

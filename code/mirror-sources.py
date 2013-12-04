@@ -15,7 +15,7 @@ iitDelRsyncUrl = iitDelUser + '@' + iitDelHost + ":" + iitDelLoc
 iitDelmirrorLog = 'iitd-mirror-' + time.strftime("%Y-%m-%d") + '.log'
 
 # Source Url
-iiithUrl = '/labs/'
+iiithUrl = '../'
 iitDelAgent = MirrorAgent(iitDelRsyncUrl, iiithUrl, iitDelmirrorLog)
 
 print 'Executing a Dryrun:'
