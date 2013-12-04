@@ -4,26 +4,82 @@ import sys
 import re
 
 class MirrorAgent:
-	""" Main Class responsible to start the mirroring operation """
+	""" 
+		This class acts as a wrapper layer over rsync for mirroring a source filesystem to a destination filesystem. 
+		It can be used for both backup and restore of a filesystem.
+
+		It uses python subprocess module to create child proccess for the file-transfer.
+	    
+	    It assumes that the user has appropriate privileges over both source and destination Urls. The Urls are directly 
+	    passed as arguments to the rsync command.
+	    
+	    Note: It deletes any extraneous and newer files on the destination and hence needs to be carefully used.
+	    
+
+	    The following methods are exposed:
+
+	    init(destUrl, srcUrl='../', logPath='')	: 
+	    	Default constructor of the class. Mandatory arguments are destination Url. Optional arguments are 
+	    	srcUrl(default value is parent directory '..') and logPath(default is stdout)
+	    	Return Values - None
+	    dryrun()  : 
+	    	This method does a rsync dry-run of the mirroring operation and can be used to see commands to be run, 
+	    	estimate transfer statistics like numfiles, totaltransfersize. 
+	    	Return Values - Tuple containing (statusOfDryRun, estimatedFiles, estimatedSize)
+	    run()     : 
+	    	This method starts a the rsync real-run process with proper arguments.
+	    	Return Values - Tuple containing (statusOfRun, rsyncPid)
+	    monitor() : 
+	    	This method can be used to monitor the rsync process, its progress and return code
+	    	Return Values - Boolean based on the ExitStatus of the rsync process
+	    getprogress() : 
+	    	This method estimates the progress of the file-transfer based on the current 
+	    	status (Not yet implemented fully).
+	    	Return Values - IntegerValue(%) indicating how much of the mirroring is done
+	    log() : 
+	    	This method logs messages to the MirrorAgent log.
+	    	Return Values - None
+	    terminate() : 
+	    	This method can be used to abort a running file-transfer in certain circumstances.
+	    	Return Values - Returns True on Success
+
+	    A typical use-case is described below :-
+
+	    1) Create an instance of the MirrorAgent Class:
+				mymirrorAgent = MirrorAgent(destUrl, srcUrl, 'mirroring.log')
+
+		2) Execute a dryrun of the mirroring process:
+				mymirrorAgent.dryrun()
+
+		3) Execute a real run of the mirroring process:
+				mymirrorAgent.run()
+
+		4) Monitor the rsync process:
+				mymirrorAgent.monitor()
+
+	 """
+
+
 	RSYNC_BASE_CMD = '/usr/bin/rsync '
 	RSYNC_COMPRESS_ARGS = '--compress '
 	RSYNC_VERBOSE_ARGS = '--verbose '
-	RSYNC_ARCHIVE_ARGS = '--archive '   # rlptgoD ( --recursive --links --perms --times --group --owner --devices --specials )
+	RSYNC_ARCHIVE_ARGS = '--archive --delete '   # rlptgoD ( --recursive --links --perms --times --group --owner --devices --specials )
 	RSYNC_DRY_RUN_ARGS = '--stats --dry-run '
 	RSYNC_PROGRESS_ARGS = '--progress '
 	RSYNC_EXCLUDES = ''
 	RSYNC_INCLUDES = ''	
 	RSYNC_CMD = RSYNC_BASE_CMD + RSYNC_COMPRESS_ARGS + RSYNC_VERBOSE_ARGS + RSYNC_ARCHIVE_ARGS
 	RETRIES = 3
-	RSYNC_LOG = 'rsync-transfer.log'
+	POLL_TIMER = 30
+	RSYNC_LOG = '_rsync-transfer.log'
 	MIRROR_LOG = 'mirroragent.log'
 
 
 	class Status:
-		""" Enumeration for Status """
+		""" Enumeration Status Codes """
 	 	(INIT, RUNNING, FAILURE, SUCCESS) = range(0, 4)
 
-	def __init__(self, destUrl, logPath='', srcUrl='./ '):
+	def __init__(self, destUrl, srcUrl='../ ', logPath=''):
 		""" Initialize the destination Url and logFile path """		
 		self.srcUrl = srcUrl + ' '
 		self.destUrl = destUrl + ' '
@@ -40,7 +96,7 @@ class MirrorAgent:
 			print 'Dying..'
 		
 	def dryrun(self):
-		""" Does a dry run and gets some stats """
+		""" Spawns a rsync dry run process and returns totalFiles and totalSize """
 		dryrun_cmd = MirrorAgent.RSYNC_CMD + MirrorAgent.RSYNC_DRY_RUN_ARGS + self.srcUrl + self.destUrl
 		self.log('Attempting a dry-run...')		
 		self.log('Dryrun Command= ' + dryrun_cmd)
@@ -51,18 +107,22 @@ class MirrorAgent:
 			self.totalFiles = re.findall(r'Number of files: (\d+)', result)
 			self.totalSize = re.findall(r'Total file size: (\d+)', result)
 			self.log('Total Files= ' + self.totalFiles[0] + ' Total Size=' + self.totalSize[0])
-			return (self.totalFiles, self.totalSize)
+			return (True, self.totalFiles, self.totalSize)
 
 		except OSError, e:
-			log('Start failed - OS Error:' + e)
-			self.status = self.Status.FAILURE
+			self.log('Dryrun failed - OS Error:' + e)
+			return (False, -1, -1)
 
 		except ValueError, e:
-			log('Start failed - Invalid Arguments' + e)
-			self.status = self.Status.FAILURE
+			self.log('Dryrun failed - Invalid Arguments' + e)
+			return (False, -1, -1)
+
+		except Exception, e:
+			self.log('Dryrun failed - Some error occured' + e)
+			return (False, -1, -1)
 
 	def run(self):
-		""" Starts the mirroring process """		
+		""" Spaws the rsync process to start the mirroring and returns the pid of the process """		
 		self.dryrun()
 		self.status = self.Status.RUNNING
 		run_cmd = MirrorAgent.RSYNC_CMD + MirrorAgent.RSYNC_PROGRESS_ARGS + self.srcUrl + self.destUrl	
@@ -72,56 +132,70 @@ class MirrorAgent:
 
 			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'wb')		
 			self.proc = subprocess.Popen(run_cmd, shell=True, stdout=self.rsyncDesc, stderr=self.rsyncDesc)
-			self.log('Started rsync process... with pid ' + str(self.proc.pid))					
+			self.log('Started rsync process... with pid ' + str(self.proc.pid))	
+			return (True, self.proc.pid)
 			
 		except IOError, e:
-			log('Unable to open rsync-transfer logfile')
+			self.log('Unable to open rsync-transfer logfile')
 			self.status = self.Status.FAILURE
+			return (False, -1)	
 		except OSError, e:
-			log('Start failed - OS Error:' + e)			
+			self.log('Start failed - OS Error:' + e)			
 			self.status = self.Status.FAILURE
+			return (False, -1)	
 		except ValueError, e:
-			log('Start failed - Invalid Arguments' + e)
-			self.status = self.Status.FAILURE		
+			self.log('Start failed - Invalid Arguments' + e)
+			self.status = self.Status.FAILURE	
+			return (False, -1)	
+		except Exception, e:
+			self.log('Start failed - Some error occured' + e)
+			self.status = self.Status.FAILURE	
+			return (False, -1)	
 
 	def monitor(self):
-		""" Report stats of the running process """
-		print "MirrorAgent Status :"
+		""" Report stats of the running rsync process """
+		print "MirrorAgent Monitor :"
 		if self.status == self.Status.RUNNING :
-			while self.proc.poll() == None:		
-				self.getprogress()				
+			while self.proc.poll() == None:						
+				self.log('Progress=' + self.getprogress())
+				time.sleep(MirrorAgent.POLL_TIMER)			
 			if self.proc.returnCode > 0 :
 				self.status = self.Status.SUCCESS
+				self.log('Rsync process(PID=' + self.proc.pid + ') completed')
 			else:
-				self.status = self.Status.FAILURE
-		return (self.status)
+				self.status = self.Status.FAILURE				
+				self.log('Rsync process(PID=' + self.proc.pid + ') failed with statuscode=' + self.proc.returnCode)
+		return self.status
 
 	def getprogress(self):
-		stdoutline = self.proc.stdout.readline()			
+		""" Still not implemented - but is possible through the rsync process handle """
+		stdoutline = self.rsyncDesc.readline()			
 		rem = re.findall(r'to-check=(\d+)/(\d+)', stdoutline)
+		print rem
 		#progress = (100 * (int(rem[0][1]) - int(rem[0][0]))) / total_files
 		return 100
 				
 	def log(self, line):
-		""" Output logs to logfile """
+		""" Output logs to a logfile """
 		current_time = time.strftime("%Y-%m-%d %H:%M:%S")
 		self.logDesc.write(current_time + " :[" + self.__class__.__name__ + "]: " + line + "\n")
 		self.logDesc.flush()
 		
 	def terminate(self):
-		""" Close the logfile """
+		""" Terminate any running processes and close all file handles """
 		self.dryproc.terminate()
 		self.proc.terminate()
 		self.logDesc.close()
+		return True
 
 
 if __name__ == '__main__' :
-	print "This is main"
-	mAgent = MirrorAgent('vuser@10.4.14.106:/data/', 'mirror.log')
-	print "Dryrun:"
+	
+	myAgent = MirrorAgent('vuser@10.4.14.106:/data/', '../../', 'mirror.log' )
+	print 'Executing a Dryrun:'
 	print mAgent.dryrun()	
-	print "Run:"
-	mAgent.run()
-	print "Monitor:"
-	mAgent.monitor()
-	#mAgent.die()
+	print 'Executing a Real Run:'
+	print 'PID=' + mAgent.run()
+	print 'Starting the Monitor:'
+	print 'ExitStatus = ' + mAgent.monitor()
+	
