@@ -55,7 +55,7 @@ class MirrorAgent:
 				mymirrorAgent.run()
 
 		4) Monitor the rsync process:
-				mymirrorAgent.monitor()
+				mymirrorAgent.monitor()	
 
 	 """
 
@@ -70,7 +70,7 @@ class MirrorAgent:
 	RSYNC_INCLUDES = ''	
 	RSYNC_CMD = RSYNC_BASE_CMD + RSYNC_COMPRESS_ARGS + RSYNC_VERBOSE_ARGS + RSYNC_ARCHIVE_ARGS
 	RETRIES = 3
-	POLL_TIMER = 30
+	MONITOR_POLL_TIMER = 300
 	RSYNC_LOG = '_rsync-transfer.log'
 	MIRROR_LOG = 'mirroragent.log'
 
@@ -122,16 +122,16 @@ class MirrorAgent:
 			return (False, -1, -1)
 
 	def run(self):
-		""" Spaws the rsync process to start the mirroring and returns the pid of the process """		
-		self.dryrun()
+		""" Spaws the rsync process to start the mirroring and returns the pid of the process """				
 		self.status = self.Status.RUNNING
 		run_cmd = MirrorAgent.RSYNC_CMD + MirrorAgent.RSYNC_PROGRESS_ARGS + self.srcUrl + self.destUrl	
 		self.log('Run Command= ' + run_cmd)		
 		self.log('Rsync Log=' + MirrorAgent.RSYNC_LOG)	
 		try:
 
-			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'wb')		
-			self.proc = subprocess.Popen(run_cmd, shell=True, stdout=self.rsyncDesc, stderr=self.rsyncDesc)
+			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'r+b')		
+			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'r')		
+			self.proc = subprocess.Popen(run_cmd, shell=True, stdout=self.rsyncDesc, stderr=self.rsyncWriteDesc)
 			self.log('Started rsync process... with pid ' + str(self.proc.pid))	
 			return (True, self.proc.pid)
 			
@@ -156,26 +156,32 @@ class MirrorAgent:
 		""" Report stats of the running rsync process """
 		print "MirrorAgent Monitor :"
 		if self.status == self.Status.RUNNING :
-			while self.proc.returncode == None :						
-				self.log('Progress=' + str(self.getprogress()))
-				self.proc.poll()					
+			while self.proc.returncode == None :										
+				time.sleep(MirrorAgent.MONITOR_POLL_TIMER)									
+				self.log('Progress=' + str(self.getprogress()))				
+				self.proc.poll()
 			if self.proc.returncode >= 0 :
 				self.status = self.Status.SUCCESS
 				self.log('Rsync process(PID=' + str(self.proc.pid) + ') completed successfully.')
+				return self.status
 			else:
 				self.status = self.Status.FAILURE				
 				self.log('Rsync process(PID=' + str(self.proc.pid) + ') failed with statuscode=' + str(self.proc.returncode))
-			time.sleep(MirrorAgent.POLL_TIMER)			
-		return self.status
+				return self.status			
 
 	def getprogress(self):
-		""" Still not implemented - but is possible through the rsync process handle """
-		#stdoutline = self.rsyncDesc.readline()			
-		#rem = re.findall(r'to-check=(\d+)/(\d+)', stdoutline)
-		#print rem
-		#progress = (100 * (int(rem[0][1]) - int(rem[0][0]))) / total_files
-		return 0
-				
+		""" Still not implemented - but is possible through the rsync process handle """		
+		self.rsyncDesc.seek(-80,2)		
+		while True:			
+			line = self.rsyncDesc.readline()						
+			if not line:
+				return -1
+			print 'line:', line
+			rem = re.search(r'xfer#=(\d+)', line)			
+			if not rem:
+				continue
+		return rem
+		
 	def log(self, line):
 		""" Output logs to a logfile """
 		current_time = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -198,5 +204,5 @@ if __name__ == '__main__' :
 	print 'Executing a Real Run:'
 	print 'PID=' + mAgent.run()
 	print 'Starting the Monitor:'
-	print 'ExitStatus = ' + mAgent.monitor()
+	print 'ExitStatus = ' + mAgent.Monitor()
 	
