@@ -204,9 +204,4 @@ if __name__ == '__main__' :
 	print 'Executing a Real Run:'
 	print 'PID=' + mAgent.run()
 	print 'Starting the Monitor:'
-<<<<<<< TREE
 	print 'ExitStatus = ' + mAgent.Monitor()
-	=======
-	print 'ExitStatus = ' + mAgent.monitor()
-	
->>>>>>> MERGE-SOURCE
