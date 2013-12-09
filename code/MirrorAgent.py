@@ -1,6 +1,7 @@
 import subprocess
 import time
 import sys
+import traceback
 import re
 
 class MirrorAgent:
@@ -91,7 +92,7 @@ class MirrorAgent:
  			self.status = self.Status.INIT	
  			self.log('Initialization done with log=' + logPath + ' srcUrl=' + self.srcUrl + ' destUrl=' + self.destUrl)	
 		except IOError, e:
-			print 'Initialization Failed: Unable to open logfile:' + logPath, e
+			print 'Initialization Failed: Unable to open logfile:' + logPath, traceback.format_exc()
 			self.status = self.Status.FAILURE
 			print 'Dying..'
 		
