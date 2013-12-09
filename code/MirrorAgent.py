@@ -110,15 +110,15 @@ class MirrorAgent:
 			return (True, self.totalFiles, self.totalSize)
 
 		except OSError, e:
-			self.log('Dryrun failed - OS Error:' + e)
+			self.log('Dryrun failed - OS Error:' + traceback.format_exc())
 			return (False, -1, -1)
 
 		except ValueError, e:
-			self.log('Dryrun failed - Invalid Arguments' + e)
+			self.log('Dryrun failed - Invalid Arguments' + traceback.format_exc())
 			return (False, -1, -1)
 
 		except Exception, e:
-			self.log('Dryrun failed - Some error occured' + e)
+			self.log('Dryrun failed - Some error occured' + traceback.format_exc())
 			return (False, -1, -1)
 
 	def run(self):
@@ -140,15 +140,15 @@ class MirrorAgent:
 			self.status = self.Status.FAILURE
 			return (False, -1)	
 		except OSError, e:
-			self.log('Start failed - OS Error:' + e)			
+			self.log('Start failed - OS Error:' + traceback.format_exc())			
 			self.status = self.Status.FAILURE
 			return (False, -1)	
 		except ValueError, e:
-			self.log('Start failed - Invalid Arguments' + e)
+			self.log('Start failed - Invalid Arguments' + traceback.format_exc())
 			self.status = self.Status.FAILURE	
 			return (False, -1)	
 		except Exception, e:
-			self.log('Start failed - Some error occured' + e)
+			self.log('Start failed - Some error occured' + traceback.format_exc())
 			self.status = self.Status.FAILURE	
 			return (False, -1)	
 
