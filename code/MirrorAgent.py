@@ -130,9 +130,8 @@ class MirrorAgent:
 		self.log('Rsync Log=' + MirrorAgent.RSYNC_LOG)	
 		try:
 
-			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'r+b')		
-			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'r')		
-			self.proc = subprocess.Popen(run_cmd, shell=True, stdout=self.rsyncDesc, stderr=self.rsyncWriteDesc)
+			self.rsyncDesc = open(MirrorAgent.RSYNC_LOG, 'r+b')					
+			self.proc = subprocess.Popen(run_cmd, shell=True, stdout=self.rsyncDesc, stderr=self.rsyncDesc)
 			self.log('Started rsync process... with pid ' + str(self.proc.pid))	
 			return (True, self.proc.pid)
 			
